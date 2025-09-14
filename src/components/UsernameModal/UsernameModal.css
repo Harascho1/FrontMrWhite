@@ -1,0 +1,114 @@
+.container {
+  min-height: 60vh;
+  display: grid;
+  place-items: center;
+  background: #f9fafb;
+  padding: 24px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+/* Dugmad */
+.btn-primary {
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+  background: black;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: #f3f3f3;
+}
+
+.btn-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Overlay i modal */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+}
+
+.modal {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 12px;
+}
+
+.modal-form {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+
+.modal-form input:focus {
+  border-color: black;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+@media (max-width:768px) {
+  .modal {
+    max-width: 200px;
+  }
+
+}

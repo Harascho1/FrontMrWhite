@@ -1,0 +1,22 @@
+.home-container {
+	place-items: center;
+	margin: auto;
+	display: grid;
+	padding: 5rem;
+}
+
+.home-container-buttons {
+	display: inline-flex;
+	gap: 1rem;
+}
+
+.home-container-buttons button {
+	flex: 1;
+}
+
+@media (max-width: 768px) {
+	.home-container-buttons {
+		position: fixed;
+		bottom: 8rem;
+	}
+}
