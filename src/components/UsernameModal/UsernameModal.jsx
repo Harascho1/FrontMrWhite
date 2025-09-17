@@ -155,7 +155,6 @@ export default function PopOutUsernameDemo() {
         setOpen(true);
       }
     }
-    console.log(`Token je: ${token}`);
   }, [token]);
 
   const handleOpen = () => {
@@ -171,7 +170,6 @@ export default function PopOutUsernameDemo() {
       return;
     }
     setError("");
-    console.log(`Submitet username is: ${username}`);
     login(username);
     setOpen(false);
   };

@@ -1,0 +1,50 @@
+.overlay {
+	position: fixed;
+	inset: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: grid;
+	place-items: center;
+	z-index: 50;
+}
+
+.window {
+	background-color: white;
+	border-radius: 16px;
+	padding: 24px;
+	max-width: 400px;
+	width: 100%;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.window p {
+	font-family: sans-serif;
+	padding-bottom: 10px;
+	font-weight: 20;
+	font-size: 1rem;
+	color: #213547;
+}
+
+.button-div {
+	display: grid;
+	place-items: center;
+}
+
+.window button {
+	padding: 8px 16px;
+	border-radius: 12px;
+	border: 1px solid #ccc;
+	background: white;
+	cursor: pointer;
+}
+
+.window button:hover {
+	background: #f3f3f3;
+}
+
+@media (max-width:768px) {
+	.window {
+		max-width: 200px;
+	}
+
+
+}

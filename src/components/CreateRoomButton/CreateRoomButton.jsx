@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AlertWindow from "../AlertWindow/AlertWindow";
 
 const createRoom = async (token, navigate) => {
   await fetch("http://localhost:8080/api/v1/createRoom", {
@@ -14,25 +15,37 @@ const createRoom = async (token, navigate) => {
 };
 
 export default function CreateRoomButton() {
-  const [error, setError] = useState("");
   const navigate = useNavigate();
+  //const [isLoggedOn, setLoggedOn] = useState(false);
+  const [isAlertOpen, setAlertOpen] = useState(false);
 
   const handleButtonClick = (e) => {
     if (e) {
       e.preventDefault();
     }
-
     const token = localStorage.getItem("token");
-    if (token.length === 0 || token === null) {
-      setError("token doesn't exist");
-      console.error(error);
+    if (!token) {
+      //setLoggedOn(true);
+      setAlertOpen(true);
+      return;
     }
     createRoom(token, navigate);
+  };
+
+  const handleCloseAlert = () => {
+    setAlertOpen(false);
   };
 
   return (
     <>
       <button onClick={handleButtonClick}>Create Room</button>
+      {isAlertOpen ? (
+        <AlertWindow
+          isOpen={isAlertOpen}
+          onClose={handleCloseAlert}
+          text={"You need to be logged on frist!"}
+        />
+      ) : null}
     </>
   );
 }

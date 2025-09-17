@@ -11,6 +11,11 @@ ul {
 	height: 400px;
 }
 
+.button-box {
+	display: grid;
+	place-items: center;
+}
+
 li::marker {
 	content: none;
 }

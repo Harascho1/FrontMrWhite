@@ -1,8 +1,6 @@
 import Home from "./pages/Home/Home.jsx";
 import Lobby from "./pages/Lobby/Lobby.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
-import { useState } from "react";
 import Layout from "./components/Layout/Layout.jsx";
 
 function App() {
