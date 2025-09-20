@@ -1,0 +1,18 @@
+input {
+	width: 90%;
+	box-sizing: border-box;
+	border: none;
+	border-radius: 0.8em;
+	padding: 10px;
+	margin: 0.8em auto;
+	/* Ostali stilovi za input polje */
+}
+
+.chat-input {
+	height: ;
+	width: 100%;
+	background-color: #f9f9f9;
+	display: grid;
+	place-items: center;
+	/* Koristi istu boju kao chat-display */
+}

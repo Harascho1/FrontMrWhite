@@ -1,0 +1,13 @@
+.chat-box {
+	position: static;
+	display: flex;
+
+	overflow: auto;
+	background-color: #f9f9f9;
+	height: 30em;
+	width: 25em;
+}
+
+.chat-box ul li {
+	font-size: 1em;
+}

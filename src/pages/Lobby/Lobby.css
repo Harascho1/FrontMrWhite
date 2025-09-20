@@ -4,11 +4,25 @@ ul {
 	margin: 0 2%;
 }
 
+.main-div {
+	display: grid;
+	place-items: center;
+}
+
 .players-box {
 	background-color: #f9f9f9;
 	position: absolute;
 	width: 200px;
 	height: 400px;
+}
+
+.chat-div {
+	display: flex;
+	flex-direction: column;
+	border-radius: 0.01rem;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	margin: 1em;
+	place-items: center;
 }
 
 .button-box {

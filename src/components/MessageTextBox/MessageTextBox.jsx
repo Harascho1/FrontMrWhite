@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./MessageTextBox.css";
 
 export default function MessageTextBox({ onEnter }) {
   const [value, setValue] = useState("");
@@ -21,11 +22,13 @@ export default function MessageTextBox({ onEnter }) {
   };
 
   return (
-    <input
-      type="text"
-      value={value}
-      onChange={handleChanges}
-      onKeyDown={handleKeyDown}
-    />
+    <div className="chat-input">
+      <input
+        type="text"
+        value={value}
+        onChange={handleChanges}
+        onKeyDown={handleKeyDown}
+      />
+    </div>
   );
 }

@@ -61,6 +61,10 @@ function useLobbyPlayers() {
     if (lastMessage) {
       try {
         const data = JSON.parse(lastMessage.data);
+        if (data.error) {
+          console.error(data.error);
+          return;
+        }
         if (data.action === "room_status") {
           setIsValid(data.isValid);
           if (data.isValid) {
@@ -71,7 +75,13 @@ function useLobbyPlayers() {
         } else if (data.action === "game_status") {
           console.log(data.status);
         } else if (data.action === "chat_message") {
-          setMessages((prevMessages) => [...prevMessages, data.msg]);
+          setMessages((prevMessages) => {
+            const updatedMsgs = [...prevMessages, data.msg];
+            //if (updatedMsgs.length > 5) {
+            //  return updatedMsgs.slice(1);
+            //}
+            return updatedMsgs;
+          });
           console.log(data.msg);
         }
       } catch (err) {
@@ -132,10 +142,12 @@ function ValidLobby({ players, messages, sendMessage, send, readyState }) {
           ))}
         </ul>
       </div>
-      <div className="button-box">
+      <div className="main-div">
+        <div className="chat-div">
+          <ChatDisplay messages={messages} />
+          <MessageTextBox onEnter={sendMessage} />
+        </div>
         <StartGameButton ws={ws} />
-        <ChatDisplay messages={messages} />
-        <MessageTextBox onEnter={sendMessage} />
       </div>
     </>
   );
