@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 
-function fetchIsOwner(token, key) {
+async function fetchIsOwner(token, key) {
   return fetch(`http://localhost:8080/api/v1/users/isOwner/${key}`, {
     method: "GET",
     headers: {
@@ -20,6 +20,7 @@ function fetchIsOwner(token, key) {
       return data.isOwner;
     })
     .catch((err) => {
+      console.error(err);
       return false;
     });
 }
@@ -27,6 +28,7 @@ function fetchIsOwner(token, key) {
 export default function StartGameButton({ ws }) {
   const key = window.location.pathname.split("/lobby/")[1];
   const token = localStorage.getItem("token");
+  // Need to add alert window
   const [isAlertOpen, setAlertOpen] = useState(false);
   const [isUserOwner, setIsUserOwner] = useState(false);
 

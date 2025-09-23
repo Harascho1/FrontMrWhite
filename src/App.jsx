@@ -7,15 +7,13 @@ import { useRefreshToken } from "./hooks/useRefreshToken.js";
 function App() {
   useRefreshToken();
   return (
-    <Router>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/lobby/:lobbyId" element={<Lobby />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </Router>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/lobby/:lobbyId" element={<Lobby />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 }
 

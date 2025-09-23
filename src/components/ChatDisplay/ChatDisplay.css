@@ -11,3 +11,14 @@
 .chat-box ul li {
 	font-size: 1em;
 }
+
+@media (max-width: 768px) {
+	.user-box {
+		display: none;
+	}
+
+	.chat-box {
+		width: 80vw;
+		height: 60vh;
+	}
+}

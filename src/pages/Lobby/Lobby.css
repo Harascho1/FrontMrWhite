@@ -42,3 +42,9 @@ h2 {
 	padding: 0% 1%;
 	margin: 0% 0;
 }
+
+@media (max-width: 768px) {
+	.players-box {
+		display: none;
+	}
+}

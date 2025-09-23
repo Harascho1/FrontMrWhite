@@ -2,13 +2,17 @@ import Navbar from "../Navbar/Navbar";
 import { Outlet } from "react-router-dom";
 import UsernameModal from "../UsernameModal/UsernameModal";
 import { useState, useEffect } from "react";
+import { useRefreshToken } from "../../hooks/useRefreshToken";
 
 export default function Layout() {
   const [showModal, setShowModal] = useState(false);
 
   const checkIfLoggedOn = () => {
     const token = localStorage.getItem("token");
-    return !!token;
+    if (token) {
+      return true;
+    }
+    return false;
   };
 
   useEffect(() => {

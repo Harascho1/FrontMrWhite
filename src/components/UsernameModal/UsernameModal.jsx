@@ -7,28 +7,43 @@ export default function UsernameModal({ open, onClose }) {
   const dialogRef = useRef(null);
   const firstFocusable = useRef(null);
   const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Have to error check this func
+
+    if (username.length < 3) {
+      setError("Username must be at least 3 characters long");
+      return;
+    }
+
+    const result = await login(username);
+
+    onClose();
+  };
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => {
       if (e.key === "Escape") {
-        onClose();
+        //onClose();
       }
-      setError("Username must have at least 3 characters");
       if (e.key === "Tab") {
         const focusables = getFocusableElements(dialogRef.current);
         if (focusables.length === 0) {
-          setOpen(false);
+          //setOpen(false);
         }
         const first = focusables[0];
         const last = focusables[focusables.length - 1];
         const active = document.activeElement;
         if (e.shiftKey && active === first) {
           last.focus();
-          e.preventDefault;
+          e.preventDefault();
         } else if (!e.shiftKey && active === last) {
           first.focus();
-          e.preventDefault;
+          e.preventDefault();
         }
       }
       document.addEventListener("keydown", onKey);
@@ -42,11 +57,10 @@ export default function UsernameModal({ open, onClose }) {
     }
   }, [open]);
 
-  const onOverlayClick = (e) => {
-    if (e.target === overlayRef.current) {
-      onClose();
-    }
-  };
+  // const onOverlayClick = (e) => {
+  //   if (e.target === overlayRef.current) {
+  //   }
+  // };
 
   return (
     <AnimatePresence>
@@ -54,8 +68,9 @@ export default function UsernameModal({ open, onClose }) {
         <motion.div
           className="overlay"
           ref={overlayRef}
-          onMouseDown={onOverlayClick}
+          //onMouseDown={onOverlayClick}
           initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
           <motion.div
@@ -68,7 +83,7 @@ export default function UsernameModal({ open, onClose }) {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             transition={{ type: "spring", shiftness: 260, damping: 20 }}
           >
-            <form className="modal-form" onSubmit={login}>
+            <form className="modal-form" onSubmit={handleSubmit}>
               <label htmlFor="username">Type your username</label>
               <input
                 id="username"
@@ -123,18 +138,28 @@ const login = async (username) => {
   if (!username) {
   }
 
-  await fetch("http://localhost:8080/api/v1/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: username,
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      localStorage.setItem("token", data.token);
-    })
-    .catch((err) => console.error("Error: ", err));
+  try {
+    const response = await fetch("http://localhost:8080/api/v1/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        username: username,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Server error: ${response.status} ${response.statusText}`,
+      );
+    }
+    const data = await response.json();
+    localStorage.setItem("token", data.token);
+    return true;
+  } catch (err) {
+    console.error("Error: ", err);
+    return false;
+  }
 };

@@ -4,6 +4,10 @@ import { useState } from "react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(false);
+  };
   return (
     <div className="navbar-container">
       <div className="menu-toggle" onClick={() => setOpen(!open)}>
@@ -11,13 +15,13 @@ export default function Navbar() {
       </div>
       {open && <div className="backdrop" onClick={() => setOpen(false)}></div>}
       <div className={`nav-links ${open ? "active" : ""}`}>
-        <Link to="/">
+        <Link to="/" onClick={handleClick}>
           <button>Home</button>
         </Link>
-        <Link to="/rules">
+        <Link to="/rules" onClick={handleClick}>
           <button>Rules</button>
         </Link>
-        <Link to="/games">
+        <Link to="/games" onClick={handleClick}>
           <button>Games</button>
         </Link>
       </div>

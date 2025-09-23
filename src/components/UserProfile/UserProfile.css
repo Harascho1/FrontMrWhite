@@ -14,3 +14,9 @@ p {
 	margin: 0;
 	margin-bottom: 0.2em;
 }
+
+@media (max-width: 768px) {
+	.user-box {
+		display: none;
+	}
+}
