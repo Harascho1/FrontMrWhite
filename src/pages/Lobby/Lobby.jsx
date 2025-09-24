@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { UserProfile } from "../../components/UserProfile/UserProfile";
-import "./Lobby.css";
 import StartGameButton from "../../components/StartGameButton/StartGameButton";
 import MessageTextBox from "../../components/MessageTextBox/MessageTextBox";
 import ChatDisplay from "../../components/ChatDisplay/ChatDisplay";
+import "./Lobby.css";
 
 function useWebSocket(url) {
   const [readyState, setReadyState] = useState(WebSocket.CONNECTING);
@@ -39,13 +39,18 @@ function useLobbyPlayers() {
   const [players, setPlayers] = useState([]);
   const [isValid, setIsValid] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [gameStatus, setGameStatus] = useState("waiting");
   const [countdown, setCountdown] = useState(10);
-  const [role, setRole] = useState("");
-  const [word, setWord] = useState("");
   const { send, readyState, lastMessage } = useWebSocket(
     `ws://localhost:8080/api/v1/gameroom/ws`,
   );
+  const [lobbyStatus, setLobbyStatus] = useState({
+    state: "waiting",
+    players: [],
+    gameStatus: "not_started",
+    gameRound: 0,
+    wordChain: [],
+    turnIndex: 0,
+  });
 
   useEffect(() => {
     if (readyState === WebSocket.OPEN) {
@@ -69,11 +74,8 @@ function useLobbyPlayers() {
           console.error(data.error);
           return;
         }
-        if (data.action === "room_status") {
-          setIsValid(data.isValid);
-          if (data.isValid) {
-            setPlayers(data.players);
-          }
+        if (data.action === "lobby-status") {
+          setLobbyStatus(data);
         } else if (data.action === "player_list") {
           setPlayers(data.players);
         } else if (data.action === "game_status") {
@@ -182,51 +184,46 @@ function ValidLobby({
   const ws = { send, readyState };
 
   const render = () => {
-    if (gameStatus == "waiting") {
-      return (
-        <>
-          <h1 style={{ textAlign: "center" }}>You are in lobby</h1>
-          <UserProfile />
-          <div className="players-box">
-            <h2>Players:</h2>
-            <ul>
-              {players && players.map((name, idx) => <li key={idx}>{name}</li>)}
-            </ul>
-          </div>
-          <div className="main-div">
-            <div className="chat-div">
-              <ChatDisplay messages={messages} />
-              <MessageTextBox onEnter={sendMessage} />
+    switch (gameStatus) {
+      case "waiting":
+        return (
+          <>
+            <h1 style={{ textAlign: "center" }}>You are in lobby</h1>
+            <UserProfile />
+            <div className="players-box">
+              <h2>Players:</h2>
+              <ul>
+                {players &&
+                  players.map((name, idx) => <li key={idx}>{name}</li>)}
+              </ul>
             </div>
-            <StartGameButton ws={ws} />
-          </div>
-        </>
-      );
-    } else if (gameStatus == "counting") {
-      return (
-        <>
-          <h1 style={{ textAlign: "center" }}>Game start in {countdown}</h1>
-          <p style={{ textAlign: "center" }}>
-            Your role is {role} and word is {word}
-          </p>
-        </>
-      );
-    } else if (gameStatus == "in-progress") {
-      return (
-        <>
-          <h1 style={{ textAlign: "center" }}>Game started</h1>
-          <p style={{ textAlign: "center" }}>
-            Your role is {role} and word is {word}
-          </p>
-          <div className="main-div">
-            <div className="chat-div">
-              <ChatDisplay messages={messages} />
-              <MessageTextBox onEnter={sendMessage} />
+          </>
+        );
+      case "counting":
+        return (
+          <>
+            <h1 style={{ textAlign: "center" }}>Game start in {countdown}</h1>
+            <p style={{ textAlign: "center" }}>
+              Your role is {role} and word is {word}
+            </p>
+          </>
+        );
+      case "in_progrese":
+        return (
+          <>
+            <h1 style={{ textAlign: "center" }}>Game started</h1>
+            <p style={{ textAlign: "center" }}>
+              Your role is {role} and word is {word}
+            </p>
+            <div className="main-div">
+              <div className="chat-div">
+                <ChatDisplay messages={messages} />
+                <MessageTextBox onEnter={sendMessage} />
+              </div>
+              <StartGameButton ws={ws} />
             </div>
-            <StartGameButton ws={ws} />
-          </div>
-        </>
-      );
+          </>
+        );
     }
   };
 
