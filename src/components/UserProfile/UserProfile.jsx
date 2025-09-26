@@ -20,7 +20,6 @@ export function UserProfile() {
       .then((res) => res.json())
       .then((data) => {
         setUsername(data.username);
-        //console.log(data.username);
         setLogIn(true);
       })
       .catch((err) => {

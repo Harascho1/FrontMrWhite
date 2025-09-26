@@ -10,7 +10,7 @@ const createRoom = async (token, navigate) => {
     },
   })
     .then((res) => res.json())
-    .then((data) => navigate(`lobby/${data.token}`))
+    .then((data) => navigate(`lobby/${data.key}`))
     .catch((err) => console.error(err));
 };
 

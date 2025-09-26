@@ -54,7 +54,7 @@ export default function StartGameButton({ ws }) {
     }
     ws.send(
       JSON.stringify({
-        action: "start_game",
+        action: "init_game",
         key: key,
         token: token,
       }),
