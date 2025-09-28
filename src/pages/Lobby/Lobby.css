@@ -9,6 +9,50 @@ ul {
 	place-items: center;
 }
 
+.player-grid-container {
+	width: 60vw;
+	height: 60vh;
+
+	width: min(50vw, 50vh);
+	height: min(50vw, 50vh);
+
+	margin: auto;
+	display: grid;
+	gap: 5px;
+	box-sizing: border-box;
+}
+
+.player-cell {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+
+.player-button {
+	/* Dugme treba da zauzme celu ćeliju */
+	width: 100%;
+	height: 100%;
+
+	/* Stil dugmeta */
+	border: 2px solid #333;
+	background-color: #f0f0f0;
+	cursor: pointer;
+	font-size: clamp(0.5rem, 1.5vw + 1.5vh, 2rem);
+	/* Responzivna veličina fonta */
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	white-space: normal;
+	/* Omogućava prelom teksta */
+	line-height: 1.2;
+}
+
+.player-button:hover {
+	background-color: #ddd;
+}
+
 .players-box {
 	background-color: #f9f9f9;
 	position: absolute;
