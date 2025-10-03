@@ -8,6 +8,11 @@
 	width: 25em;
 }
 
+.chat-box ul {
+	padding: 0 3%;
+	margin: 1% 0;
+}
+
 .chat-box ul li {
 	font-size: 1em;
 }

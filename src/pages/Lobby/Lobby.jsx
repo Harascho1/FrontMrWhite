@@ -41,7 +41,7 @@ function useWebSocket(url) {
 
 function useLobbyPlayers() {
   const [messages, setMessages] = useState([]);
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(0);
   const [isValid, setIsValid] = useState(true);
   const { send, readyState, lastMessage } = useWebSocket(
     `ws://localhost:8080/api/v1/gameroom/ws`,
@@ -97,6 +97,10 @@ function useLobbyPlayers() {
             }));
             break;
           }
+          case "countdown": {
+            setCountdown(data.countdown);
+            break;
+          }
           case "full_lobby_status": {
             setLobbyStatus({
               state: data.state,
@@ -116,6 +120,14 @@ function useLobbyPlayers() {
               ...prevStatus,
               wordChain: data.word_chain,
               activeId: data.player_id,
+            }));
+            break;
+          }
+          case "game_finished": {
+            setLobbyStatus((prevStatus) => ({
+              ...prevStatus,
+              gameStatus: data.gameStatus,
+              state: data.state,
             }));
             break;
           }
@@ -147,15 +159,6 @@ function useLobbyPlayers() {
     }
   }, [lastMessage]);
 
-  useEffect(() => {
-    if (lobbyStatus.state === "playing" && countdown > 0) {
-      const timer = setInterval(() => {
-        setCountdown((prevCountdown) => setCountdown(prevCountdown - 1));
-      }, 1000);
-      return () => clearInterval(timer);
-    }
-  }, [lobbyStatus.state, countdown]);
-
   const sendMessage = (messageText) => {
     const key = window.location.pathname.split("/lobby/")[1];
     const token = localStorage.getItem("token");
@@ -169,9 +172,23 @@ function useLobbyPlayers() {
     );
   };
 
+  const sendWord = (word) => {
+    const key = window.location.pathname.split("/lobby/")[1];
+    const token = localStorage.getItem("token");
+    send(
+      JSON.stringify({
+        action: "send_word",
+        key: key,
+        token: token,
+        msg: word.split(" ")[0],
+      }),
+    );
+  };
+
   return {
     isValid,
     sendMessage,
+    sendWord,
     messages,
     send,
     readyState,
@@ -184,6 +201,7 @@ export default function Lobby() {
   const {
     isValid,
     sendMessage,
+    sendWord,
     messages,
     send,
     readyState,
@@ -199,6 +217,7 @@ export default function Lobby() {
       send={send}
       readyState={readyState}
       sendMessage={sendMessage}
+      sendWord={sendWord}
       messages={messages}
       lobbyStatus={lobbyStatus}
       countdown={countdown}
@@ -213,6 +232,7 @@ function InvalidLobby() {
 function ValidLobby({
   messages,
   sendMessage,
+  sendWord,
   send,
   readyState,
   lobbyStatus,
@@ -223,21 +243,14 @@ function ValidLobby({
   const render = () => {
     switch (lobbyStatus.state) {
       case "waiting":
+        // TODO: MYb to add whos lobby is / eg. Luka's lobby
         return (
-          <>
-            <h1 style={{ textAlign: "center" }}>You are in lobby</h1>
-            <UserProfile />
-            <div className="main-div">
-              <StartGameButton ws={ws} />
-            </div>
+          <div className="lobby-container">
             <div className="players-box">
               <h2>Players:</h2>
               <ul>
                 {lobbyStatus.players.map((player) => {
-                  console.log(player.id);
-                  console.log(lobbyStatus.userId);
                   const isMe = player.id === lobbyStatus.userId;
-                  console.log("isMe value:", isMe);
                   const playerStype = { fontWeight: isMe ? "bold" : "normal" };
                   return (
                     <li key={player.id} style={playerStype}>
@@ -247,44 +260,54 @@ function ValidLobby({
                 })}
               </ul>
             </div>
-          </>
+            <div className="main-div">
+              <div className="chat-div">
+                <ChatDisplay messages={messages} />
+                <MessageTextBox onEnter={sendMessage} />
+              </div>
+              <div className="start-game-btn">
+                <StartGameButton ws={ws} />
+              </div>
+            </div>
+            <UserProfile />
+          </div>
         );
       case "playing":
         if (lobbyStatus.gameStatus === "playing") {
           return (
             <>
-              <h1 style={{ textAlign: "center" }}>Game started</h1>
               {countdown !== 0 && (
                 <h1 style={{ textAlign: "center" }}>
                   Game start in {countdown}
                 </h1>
               )}
-              <UserProfile />
-              <div className="players-box">
-                <h2>Players:</h2>
-                <ul>
-                  {lobbyStatus.players.map((player) => {
-                    const isMe = player.id === lobbyStatus.userId;
-                    console.log("isMe value:", isMe);
-                    const playerStype = {
-                      fontWeight: isMe ? "bold" : "normal",
-                    };
-                    return (
-                      <li key={player.id} style={playerStype}>
-                        {player.name}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-              <div className="main-div">
-                <div className="chat-div">
-                  <p>Word is {lobbyStatus.word}</p>
-                  <ChatDisplay messages={lobbyStatus.wordChain} />
-                  {lobbyStatus.userId === lobbyStatus.activeId && (
-                    <MessageTextBox onEnter={sendMessage} />
-                  )}
+              <div className="lobby-container">
+                <div className="players-box">
+                  <h2>Players:</h2>
+                  <ul>
+                    {lobbyStatus.players.map((player) => {
+                      const isMe = player.id === lobbyStatus.userId;
+                      const playerStype = {
+                        fontWeight: isMe ? "bold" : "normal",
+                      };
+                      return (
+                        <li key={player.id} style={playerStype}>
+                          {player.name}
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </div>
+                <div className="main-div">
+                  <div className="chat-div">
+                    <p>Word is {lobbyStatus.word}</p>
+                    <ChatDisplay messages={lobbyStatus.wordChain} />
+                    {lobbyStatus.userId === lobbyStatus.activeId && (
+                      <MessageTextBox onEnter={sendWord} />
+                    )}
+                  </div>
+                </div>
+                <UserProfile />
               </div>
             </>
           );
@@ -322,7 +345,22 @@ function ValidLobby({
           );
         }
       case "finished": {
-        return <h1 style={{ textAlign: "center" }}>Game finishe</h1>;
+        const gameResult = () => {
+          switch (lobbyStatus.gameStatus) {
+            case "civ_win":
+              return <h1 style={{ textAlign: "center" }}>Normies win</h1>;
+            case "imp_win":
+              return <h1 style={{ textAlign: "center" }}>Impostor wins</h1>;
+            case "mr_white":
+              return <h1 style={{ textAlign: "center" }}>Mr. White wins</h1>;
+          }
+        };
+        return (
+          <>
+            <h1 style={{ textAlign: "center" }}>Game finish</h1>
+            {gameResult()}
+          </>
+        );
       }
     }
   };

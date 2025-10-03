@@ -28,6 +28,8 @@
 
 .menu-toggle {
 	font-size: 1.5rem;
+	margin-left: 1%;
+	margin-top: 2%;
 	cursor: pointer;
 	display: none;
 	z-index: 1001;

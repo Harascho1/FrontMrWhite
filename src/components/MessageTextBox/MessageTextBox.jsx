@@ -9,10 +9,6 @@ export default function MessageTextBox({ onEnter }) {
   };
 
   const handleSend = () => {
-    if (value.toString().length > 10) {
-      // Need to set Error
-      return;
-    }
     if (value.trim() !== "") {
       onEnter(value);
       setValue(""); // Cistimo input polje
