@@ -1,17 +1,20 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AlertWindow from "../AlertWindow/AlertWindow";
+import api from "../../services/api";
 
 const createRoom = async (token, navigate) => {
-  await fetch("http://localhost:8080/api/v1/createRoom", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => navigate(`lobby/${data.key}`))
-    .catch((err) => console.error(err));
+  try {
+    const response = await api.get("/createRoom", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const roomKey = response.data.key;
+    navigate(`lobby/${roomKey}`);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 export default function CreateRoomButton() {

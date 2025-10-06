@@ -5,6 +5,7 @@ import MessageTextBox from "../../components/MessageTextBox/MessageTextBox";
 import ChatDisplay from "../../components/ChatDisplay/ChatDisplay";
 import "./Lobby.css";
 import { useCallback } from "react";
+import VoteButton from "../../components/VoteButton/VoteButton";
 
 function useWebSocket(url) {
   const [readyState, setReadyState] = useState(WebSocket.CONNECTING);
@@ -50,6 +51,7 @@ function useLobbyPlayers() {
     action: "lobby_status",
     state: "waiting",
     players: [],
+    votingList: [],
     gameStatus: "not_started",
     gameRound: 0,
     wordChain: [],
@@ -57,6 +59,7 @@ function useLobbyPlayers() {
     word: "",
     userId: 0,
     activeId: 0,
+    votedFor: "",
   });
 
   useEffect(() => {
@@ -128,6 +131,13 @@ function useLobbyPlayers() {
               ...prevStatus,
               gameStatus: data.gameStatus,
               state: data.state,
+            }));
+            break;
+          }
+          case "vote_list": {
+            setLobbyStatus((prevStatus) => ({
+              ...prevStatus,
+              votingList: data.votingList,
             }));
             break;
           }
@@ -274,12 +284,22 @@ function ValidLobby({
         );
       case "playing":
         if (lobbyStatus.gameStatus === "playing") {
+          let writter = null;
+          if (lobbyStatus.activeId !== 0) {
+            writter = lobbyStatus.players.find(
+              (obj) => obj.id === lobbyStatus.activeId,
+            );
+          }
+          console.log(writter);
           return (
             <>
               {countdown !== 0 && (
                 <h1 style={{ textAlign: "center" }}>
                   Game start in {countdown}
                 </h1>
+              )}
+              {countdown === 0 && lobbyStatus.activeId !== 0 && (
+                <h1 style={{ textAlign: "center" }}>{writter.name} turn</h1>
               )}
               <div className="lobby-container">
                 <div className="players-box">
@@ -312,8 +332,7 @@ function ValidLobby({
             </>
           );
         } else if (lobbyStatus.gameStatus === "voting") {
-          const players = lobbyStatus.players;
-          console.log(players);
+          const players = lobbyStatus.votingList;
           const gridSize = Math.ceil(Math.sqrt(players.length));
           const totalCells = gridSize * gridSize;
           const cells = players.slice(0, totalCells);
@@ -331,12 +350,11 @@ function ValidLobby({
                 {cells.map((player) => (
                   <div key={player.id} className="player-cell">
                     {!player.empty && (
-                      <button
-                        className="player-button"
-                        onClick={() => alert(`Kliknut igrac ${player.name}`)}
-                      >
-                        {player.name}
-                      </button>
+                      <VoteButton
+                        ws={ws}
+                        player={player}
+                        btnClassName={"player-button"}
+                      />
                     )}
                   </div>
                 ))}
@@ -357,7 +375,10 @@ function ValidLobby({
         };
         return (
           <>
-            <h1 style={{ textAlign: "center" }}>Game finish</h1>
+            <h1 style={{ textAlign: "center" }}>Game finished</h1>
+            {countdown !== 0 && (
+              <h1 style={{ textAlign: "center" }}>Game start in {countdown}</h1>
+            )}
             {gameResult()}
           </>
         );

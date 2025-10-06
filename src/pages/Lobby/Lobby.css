@@ -83,6 +83,7 @@ ul {
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 	margin: 1em;
 	place-items: center;
+	border-radius: 0.01rem;
 }
 
 .button-box {

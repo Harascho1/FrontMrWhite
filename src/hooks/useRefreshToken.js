@@ -1,11 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { jwtDecode } from "jwt-decode";
 import api from "../services/api";
-import { Navigate, useNavigate } from "react-router-dom";
 
 export const useRefreshToken = () => {
   const intervalRef = useRef(null);
-  const navigate = useNavigate();
   const checkAndRefreshToken = async () => {
     const accessToken = localStorage.getItem("token");
     if (!accessToken) {
