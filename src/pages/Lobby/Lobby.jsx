@@ -6,6 +6,7 @@ import ChatDisplay from "../../components/ChatDisplay/ChatDisplay";
 import "./Lobby.css";
 import { useCallback } from "react";
 import VoteButton from "../../components/VoteButton/VoteButton";
+import { pre } from "framer-motion/client";
 
 function useWebSocket(url) {
   const [readyState, setReadyState] = useState(WebSocket.CONNECTING);
@@ -42,7 +43,10 @@ function useWebSocket(url) {
 
 function useLobbyPlayers() {
   const [messages, setMessages] = useState([]);
-  const [countdown, setCountdown] = useState(0);
+  const [countdown, setCountdown] = useState({
+    countdown: 0,
+    waitingFor: "",
+  });
   const [isValid, setIsValid] = useState(true);
   const { send, readyState, lastMessage } = useWebSocket(
     `ws://localhost:8080/api/v1/gameroom/ws`,
@@ -52,13 +56,13 @@ function useLobbyPlayers() {
     state: "waiting",
     players: [],
     votingList: [],
+    playersWhoVote: [],
     gameStatus: "not_started",
     gameRound: 0,
     wordChain: [],
     turnIndex: 0,
     word: "",
     userId: 0,
-    activeId: 0,
     votedFor: "",
   });
 
@@ -101,11 +105,24 @@ function useLobbyPlayers() {
             break;
           }
           case "countdown": {
-            setCountdown(data.countdown);
+            setCountdown((prevStatus) => ({
+              ...prevStatus,
+              countdown: data.countdown,
+              text: data.text,
+            }));
+
+            break;
+          }
+          case "players_who_vote": {
+            setLobbyStatus((prevStatus) => ({
+              ...prevStatus,
+              playersWhoVote: data.playersWhoVote,
+            }));
             break;
           }
           case "full_lobby_status": {
-            setLobbyStatus({
+            setLobbyStatus((prevStatus) => ({
+              ...prevStatus,
               state: data.state,
               players: data.players,
               gameStatus: data.gameStatus,
@@ -114,19 +131,21 @@ function useLobbyPlayers() {
               turnIndex: data.turnIndex,
               gameRound: data.gameRound,
               userId: data.userId,
-              activeId: data.activeId,
-            });
+              votingList: data.votingList,
+              playersWhoVote: data.playersWhoVote,
+            }));
             break;
           }
           case "type": {
             setLobbyStatus((prevStatus) => ({
               ...prevStatus,
-              wordChain: data.word_chain,
-              activeId: data.player_id,
+              wordChain: data.wordChain,
+              word: data.word,
+              turnIndex: data.player_id,
             }));
             break;
           }
-          case "game_finished": {
+          case "lobby_game_status": {
             setLobbyStatus((prevStatus) => ({
               ...prevStatus,
               gameStatus: data.gameStatus,
@@ -285,20 +304,21 @@ function ValidLobby({
       case "playing":
         if (lobbyStatus.gameStatus === "playing") {
           let writter = null;
-          if (lobbyStatus.activeId !== 0) {
+          console.log(lobbyStatus.turnIndex);
+          if (lobbyStatus.turnIndex !== 0) {
             writter = lobbyStatus.players.find(
-              (obj) => obj.id === lobbyStatus.activeId,
+              (obj) => obj.id === lobbyStatus.turnIndex,
             );
           }
           console.log(writter);
           return (
             <>
-              {countdown !== 0 && (
+              {countdown.countdown !== 0 && (
                 <h1 style={{ textAlign: "center" }}>
-                  Game start in {countdown}
+                  {countdown.text + ": " + countdown.countdown}
                 </h1>
               )}
-              {countdown === 0 && lobbyStatus.activeId !== 0 && (
+              {countdown.countdown === 0 && lobbyStatus.turnIndex !== 0 && (
                 <h1 style={{ textAlign: "center" }}>{writter.name} turn</h1>
               )}
               <div className="lobby-container">
@@ -322,7 +342,7 @@ function ValidLobby({
                   <div className="chat-div">
                     <p>Word is {lobbyStatus.word}</p>
                     <ChatDisplay messages={lobbyStatus.wordChain} />
-                    {lobbyStatus.userId === lobbyStatus.activeId && (
+                    {lobbyStatus.userId === lobbyStatus.turnIndex && (
                       <MessageTextBox onEnter={sendWord} />
                     )}
                   </div>
@@ -337,12 +357,24 @@ function ValidLobby({
           const totalCells = gridSize * gridSize;
           const cells = players.slice(0, totalCells);
 
-          while (cells.lenght < totalCells) {
-            cells.push({ id: `empty-${cells.lenght}`, empty: true });
+          const myID = lobbyStatus.userId;
+          const voters = lobbyStatus.playersWhoVote || [];
+          const didIVote = voters.find((obj) => obj.id === myID);
+          const hasVoted = !!didIVote;
+          console.log(didIVote);
+
+          while (cells.length < totalCells) {
+            cells.push({ id: `empty-${cells.length}`, empty: true });
           }
-          return (
-            <>
-              <h1 style={{ textAlign: "center" }}>Voting time</h1>
+
+          const renderYouVoted = () => {
+            return (
+              <h1 style={{ textAlign: "center" }}> You locked in your vote</h1>
+            );
+          };
+
+          const printCells = () => {
+            return (
               <div
                 className="player-grid-container"
                 style={{ "--grid-size": gridSize }}
@@ -353,12 +385,25 @@ function ValidLobby({
                       <VoteButton
                         ws={ws}
                         player={player}
-                        btnClassName={"player-button"}
+                        btnClassName={`player-button ${didIVote ? "disabled" : ""}`}
+                        dissable={hasVoted}
                       />
                     )}
                   </div>
                 ))}
               </div>
+            );
+          };
+          return (
+            <>
+              <h1 style={{ textAlign: "center" }}>Voting time</h1>
+              {countdown.countdown !== 0 && (
+                <h1 style={{ textAlign: "center" }}>
+                  {countdown.text + ": " + countdown.countdown}
+                </h1>
+              )}
+              {printCells()}
+              {hasVoted && renderYouVoted()}
             </>
           );
         }
@@ -376,8 +421,10 @@ function ValidLobby({
         return (
           <>
             <h1 style={{ textAlign: "center" }}>Game finished</h1>
-            {countdown !== 0 && (
-              <h1 style={{ textAlign: "center" }}>Game start in {countdown}</h1>
+            {countdown.countdown !== 0 && (
+              <h1 style={{ textAlign: "center" }}>
+                {countdown.text + ": " + countdown.countdown}
+              </h1>
             )}
             {gameResult()}
           </>

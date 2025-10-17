@@ -1,4 +1,4 @@
-export default function VoteButton({ ws, player, btnClassName }) {
+export default function VoteButton({ ws, player, btnClassName, disabled }) {
   const key = window.location.pathname.split("/lobby/")[1];
   const token = localStorage.getItem("token");
   // Need to add alert window
@@ -19,7 +19,11 @@ export default function VoteButton({ ws, player, btnClassName }) {
     );
   };
   return (
-    <button className={btnClassName} onClick={handleVotePlayer}>
+    <button
+      className={btnClassName}
+      onDoubleClick={handleVotePlayer}
+      disabled={disabled}
+    >
       {player.name}
     </button>
   );
