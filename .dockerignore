@@ -1,0 +1,13 @@
+node_modules
+
+build
+dist
+
+npm-debug.log
+npm-cache
+
+.git
+
+.env
+
+README.md

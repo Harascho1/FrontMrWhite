@@ -6,12 +6,14 @@ input {
 	padding: 10px;
 	margin: 0.8em auto;
 	/* Ostali stilovi za input polje */
+	background-color: var(--color-textbox);
+
+	color: var(--color-text);
 }
 
 .chat-input {
-	height: ;
 	width: 100%;
-	background-color: #f9f9f9;
+	background-color: var(--color-chatdisplay);
 	display: grid;
 	place-items: center;
 	/* Koristi istu boju kao chat-display */

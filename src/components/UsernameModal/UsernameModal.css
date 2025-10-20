@@ -75,7 +75,7 @@
 }
 
 .modal-form input:focus {
-  border-color: black;
+  border-color: var(--color-input-focus-border);
 }
 
 .error {
