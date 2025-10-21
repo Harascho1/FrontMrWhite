@@ -8,8 +8,7 @@ ul {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-
-	width: 100%;
+	margin: 0 10%;
 	height: 100%;
 }
 
@@ -33,6 +32,37 @@ ul {
 	display: grid;
 	gap: 5px;
 	box-sizing: border-box;
+}
+
+.right-column {
+	container-type: inline-size;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 400px;
+	gap: 40px;
+	margin-top: 2%;
+	margin-right: 2%;
+}
+
+@container (max-width:190px) {
+	.right-column>* {
+		display: none;
+	}
+}
+
+.more-info-box {
+	width: 80%;
+	height: auto;
+	background-color: var(--color-moreInfoBox);
+	box-shadow: var(--shadow-medium);
+}
+
+.more-info-box p {
+
+	text-align: left;
+	margin: 5%;
+	line-height: 1.6;
 }
 
 .player-cell {
@@ -80,21 +110,31 @@ ul {
 	background-color: #ddd;
 }
 
+.left-column {
+	margin-left: 2%;
+	margin-top: 2%;
+}
+
+
 .players-box {
 	display: flex;
 	flex-direction: column;
-	background-color: #f9f9f9;
+	background-color: var(--color-playersList);
+	box-shadow: var(--shadow-medium);
 	width: 200px;
 	height: 400px;
-	margin-left: 2%;
-	margin-top: 2%;
+}
+
+.players-toggle {
+	display: none;
+
 }
 
 .chat-div {
 	display: flex;
 	flex-direction: column;
 	border-radius: 0.01rem;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	box-shadow: var(--shadow-medium);
 	margin: 1em;
 	place-items: center;
 	border-radius: 0.01rem;
@@ -119,11 +159,24 @@ h2 {
 }
 
 .start-game-btn {
-	margin: 10% 0;
+	display: flex;
+	margin: 5% 0;
+	align-items: center;
+	justify-content: center;
+
+}
+
+.start-game-btn button {
+	box-shadow: var(--shadow-medium);
+	width: 150px;
+	height: 50px;
+	font-size: 20px;
+
 }
 
 @media (max-width: 768px) {
 	.players-box {
+		position: absolute;
 		display: none;
 	}
 
@@ -132,4 +185,51 @@ h2 {
 		flex-direction: column;
 		align-items: center;
 	}
+
+	.right-column {
+		display: none;
+	}
+
+	.lobby-container {
+		margin: 0 0;
+	}
+
+	.more-info-box {
+		display: none;
+	}
+
+	.players-toggle {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		margin: 0 0 2% 2%;
+		display: block;
+	}
+
+	.left-column {
+		margin: 0;
+	}
+
+	.players-toggle button {
+		padding: 1%;
+	}
+
+	.players-overlay {
+		top: 0;
+		position: absolute;
+		width: 100vw;
+		height: 100vh;
+	}
+
+
+	.players-box.active {
+		opacity: 0.7;
+		display: flex;
+		position: absolute;
+		height: 80%;
+		width: 60%;
+		left: 0;
+		z-index: 100;
+	}
+
 }

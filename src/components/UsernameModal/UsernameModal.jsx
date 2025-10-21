@@ -20,8 +20,9 @@ export default function UsernameModal({ open, onClose }) {
     }
 
     const result = await login(username);
-
-    onClose();
+    if (result == true) {
+      onClose();
+    }
   };
 
   useEffect(() => {
@@ -96,13 +97,6 @@ export default function UsernameModal({ open, onClose }) {
               />
 
               <div className="modal-actions">
-                <button
-                  className="btn-secondary"
-                  type="button"
-                  onClick={onClose}
-                >
-                  Cancel
-                </button>
                 <button type="submit" className="btn-primary">
                   Submit
                 </button>

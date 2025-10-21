@@ -1,22 +1,45 @@
 .home-container {
+	position: relative;
 	place-items: center;
 	margin: auto;
 	display: grid;
-	padding: 5rem;
+	margin: 2% 0;
+	height: 100%;
 }
 
-.home-container-buttons {
-	display: inline-flex;
-	gap: 1rem;
+.home-container-button {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
-.home-container-buttons button {
-	flex: 1;
+.arrow {
+	position: absolute;
+}
+
+.arrow-1 {
+	width: 150;
+	top: 50%;
+	right: 60%;
+	transform: translateY(-50%);
+}
+
+.home-container-button button {
+	width: 200px;
 }
 
 @media (max-width: 768px) {
-	.home-container-buttons {
-		position: fixed;
-		bottom: 8rem;
+	.home-container-button {
+		position: relative;
+		margin-top: 55%;
+	}
+
+	.home-container {
+		margin: 10% 0;
+	}
+
+	.home-container-button button {
+		width: 150px;
 	}
 }

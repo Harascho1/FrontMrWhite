@@ -1,8 +1,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     font-family: system-ui,
-      Avenir,
       Helvetica,
+      Avenir,
       Arial,
       sans-serif;
     line-height: 1.5;
@@ -28,12 +28,27 @@
     --color-button-primary: #fffade;
     --color-button-primary-hover: #FFFCEA;
 
+    --color-button-submit: #473C00;
+    --color-button-submit-hover: #A28900;
+
     --color-text: #474747;
 
     --color-input-focus-border: #474747;
+    --color-input-hover: #FFFCEA;
 
-    --color-chatdisplay: #c7c197;
+    --color-chatdisplay: #FDFBD4;
+    --color-playersList: #FDFBD4;
+    --color-userBox: #FDFBD4;
+    --color-moreInfoBox: #FDFBD4;
+
+    --color-rectangle: #FDFBD4;
+
+    --color-alertWindow: #FDFBD4;
+
     --color-textbox: #e3dcac;
+
+
+    --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.2);
 
     color: #213547;
     background-color: #e8e5d1;

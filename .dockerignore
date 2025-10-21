@@ -2,12 +2,17 @@ node_modules
 
 build
 dist
+tmp
 
 npm-debug.log
 npm-cache
 
 .git
+.gitignore
 
 .env
 
 README.md
+
+Dockerfile
+.dockerignore

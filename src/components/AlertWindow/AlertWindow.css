@@ -8,12 +8,12 @@
 }
 
 .window {
-	background-color: white;
+	background-color: var(--color-alertWindow);
 	border-radius: 16px;
 	padding: 24px;
 	max-width: 400px;
 	width: 100%;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+	box-shadow: var(--shadow-midium)
 }
 
 .window p {
@@ -33,18 +33,16 @@
 	padding: 8px 16px;
 	border-radius: 12px;
 	border: 1px solid #ccc;
-	background: white;
+	background: var(--color-button-primary);
 	cursor: pointer;
 }
 
 .window button:hover {
-	background: #f3f3f3;
+	background: var(--color-button-primary-hover);
 }
 
 @media (max-width:768px) {
 	.window {
 		max-width: 200px;
 	}
-
-
 }

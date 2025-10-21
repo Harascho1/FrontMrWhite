@@ -1,7 +1,8 @@
 import Home from "./pages/Home/Home.jsx";
 import Lobby from "./pages/Lobby/Lobby.jsx";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Rules from "./pages/Rules/Rules.jsx";
 import Layout from "./components/Layout/Layout.jsx";
+import { Routes, Route } from "react-router-dom";
 import { useRefreshToken } from "./hooks/useRefreshToken.js";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/lobby/:lobbyId" element={<Lobby />} />
+        <Route path="/rules" element={<Rules />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

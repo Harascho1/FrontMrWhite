@@ -9,19 +9,15 @@
 }
 
 .chat-box ul {
-	padding: 0 3%;
-	margin: 1% 0;
+	padding: 0 0;
+	margin: 2% 2%;
 }
 
 .chat-box ul li {
-	font-size: 1em;
+	font-size: 25px;
 }
 
 @media (max-width: 768px) {
-	.user-box {
-		display: none;
-	}
-
 	.chat-box {
 		width: 80vw;
 		height: 60vh;

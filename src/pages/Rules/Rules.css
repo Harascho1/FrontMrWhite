@@ -1,0 +1,22 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+	text-align: center;
+	z-index: 102;
+	position: relative;
+}
+
+.outer-container {
+	position: relative;
+	z-index: 100;
+	margin: 0 5%;
+}
+
+.decor-rectangle {
+	position: absolute;
+	background-color: var(--color-rectangle);
+	z-index: 101;
+}
