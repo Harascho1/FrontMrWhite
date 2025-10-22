@@ -1,11 +1,10 @@
 .chat-box {
 	position: static;
-	display: flex;
+	display: inherit;
 
 	overflow: auto;
 	background-color: var(--color-chatdisplay);
-	height: 30em;
-	width: 25em;
+	width: 100%;
 }
 
 .chat-box ul {

@@ -87,7 +87,11 @@ function ValidLobby({
           );
         break;
       case "finished":
-        <LobbyFinished lobbyStatus={lobbyStatus} countdown={countdown} />;
+        console.log(lobbyStatus);
+        return (
+          <LobbyFinished lobbyStatus={lobbyStatus} countdown={countdown} />
+        );
+        break;
       default:
     }
   };

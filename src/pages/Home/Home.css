@@ -14,15 +14,34 @@
 	transform: translate(-50%, -50%);
 }
 
+.arrow-container {
+	display: contents;
+}
+
 .arrow {
 	position: absolute;
+	width: 250px;
+	height: 250px;
 }
 
 .arrow-1 {
-	width: 150;
-	top: 50%;
-	right: 60%;
-	transform: translateY(-50%);
+	bottom: calc(100% + 10px);
+	right: calc(60% + 10px);
+}
+
+.arrow-2 {
+	bottom: calc(100% + 10px);
+	left: calc(40% + 10px);
+}
+
+.arrow-3 {
+	top: calc(30% + 10px);
+	left: calc(60% + 10px);
+}
+
+.arrow-4 {
+	top: calc(30% + 10px);
+	right: calc(80% + 10px);
 }
 
 .home-container-button button {
@@ -30,16 +49,37 @@
 }
 
 @media (max-width: 768px) {
-	.home-container-button {
-		position: relative;
-		margin-top: 55%;
-	}
-
 	.home-container {
 		margin: 10% 0;
+	}
+
+	.arrow {
+		width: 150px;
+		height: 150px;
 	}
 
 	.home-container-button button {
 		width: 150px;
 	}
+
+	.arrow-1 {
+		bottom: calc(100% + 5px);
+		right: calc(80% + 5px);
+	}
+
+	.arrow-2 {
+		bottom: calc(100% + 5px);
+		left: calc(60% + 5px);
+	}
+
+	.arrow-3 {
+		top: calc(100% + 5px);
+		left: calc(60% + 5px);
+	}
+
+	.arrow-4 {
+		top: calc(30% + 5px);
+		right: calc(80% + 5px);
+	}
+
 }
