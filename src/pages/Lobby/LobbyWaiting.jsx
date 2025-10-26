@@ -1,8 +1,7 @@
-import ChatDisplay from "../../components/ChatDisplay/ChatDisplay";
-import MessageTextBox from "../../components/MessageTextBox/MessageTextBox";
 import StartGameButton from "../../components/StartGameButton/StartGameButton";
 import { useState } from "react";
 import UserIcon from "../../assets/user-svgrepo-com.svg";
+import Chat from "../../components/Chat/Chat";
 
 export default function LobbyWaiting({
   lobbyStatus,
@@ -46,16 +45,12 @@ export default function LobbyWaiting({
     );
   };
 
-  const handleClick = () => {
-    setOpen(false);
-  };
-
   const renderPlayersBox = () => {
     return (
       <>
         <div className="players-toggle" onClick={() => setOpen(!open)}>
           <button>
-            <img src={UserIcon} style={{ width: "50px" }} />
+            <img src={UserIcon} style={{ width: "35px" }} />
           </button>
         </div>
         {open && (
@@ -79,8 +74,6 @@ export default function LobbyWaiting({
     );
   };
 
-  console.log(lobbyStatus);
-
   return (
     <>
       <div className="lobby-container">
@@ -89,10 +82,7 @@ export default function LobbyWaiting({
           {motivationQuates()}
         </div>
         <div className="main-div">
-          <div className="chat-div">
-            <ChatDisplay messages={messages} />
-            <MessageTextBox onEnter={sendMessage} />
-          </div>
+          <Chat onEnter={sendMessage} messages={messages} />
         </div>
         <div className="right-column">
           {moreInforBox()} {inspirationQuate()}

@@ -13,8 +13,13 @@ input {
 
 }
 
-input:hover {
+input:hover:not(:disabled) {
 	opacity: 0.66;
+}
+
+input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .chat-input {

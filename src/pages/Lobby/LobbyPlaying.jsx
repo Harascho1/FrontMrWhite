@@ -1,8 +1,17 @@
 import ChatDisplay from "../../components/ChatDisplay/ChatDisplay";
 import MessageTextBox from "../../components/MessageTextBox/MessageTextBox";
 import Table from "../../assets/sto12.svg";
+import Chat from "../../components/Chat/Chat";
 
-export default function LobbyPlaying({ lobbyStatus, countdown, sendWord }) {
+export default function LobbyPlaying({
+  lobbyStatus,
+  countdown,
+  sendWord,
+  sendDM,
+  privateMessages,
+}) {
+  // NOTE: Ovo moze da pozluzi mozda posle.!.
+  /*
   const renderPlayersBox = () => {
     return (
       <div className="players-box">
@@ -21,6 +30,7 @@ export default function LobbyPlaying({ lobbyStatus, countdown, sendWord }) {
       </div>
     );
   };
+  */
 
   const renderPlayersOnTable = () => {
     const players = lobbyStatus.players;
@@ -81,20 +91,35 @@ export default function LobbyPlaying({ lobbyStatus, countdown, sendWord }) {
         <h1 style={{ textAlign: "center" }}>{writter.name} turn</h1>
       )}
       <div className="lobby-container">
+        <div className="left-chat">
+          <Chat
+            messages={privateMessages.leftMessages}
+            onEnter={sendDM.sendLeftPlayer}
+            width={"20vw"}
+            height={"40%"}
+          />
+        </div>
         <div className="main-div">
           <div className="chat-div-playing">
             <img src={Table} className="table-container" />
             {renderPlayersOnTable()}
-            <div className="chat-stack">
-              <h2 style={{ textAlign: "center" }}>
-                Word is {lobbyStatus.word}
-              </h2>
-              <ChatDisplay messages={lobbyStatus.wordChain} />
-              {lobbyStatus.userId === lobbyStatus.turnIndex && (
-                <MessageTextBox onEnter={sendWord} />
-              )}
-            </div>
           </div>
+          <div className="chat-stack">
+            <h2 style={{ textAlign: "center" }}>Word is {lobbyStatus.word}</h2>
+            <ChatDisplay messages={lobbyStatus.wordChain} />
+            <MessageTextBox
+              onEnter={sendWord}
+              disabled={lobbyStatus.userId !== lobbyStatus.turnIndex}
+            />
+          </div>
+        </div>
+        <div className="right-chat">
+          <Chat
+            messages={privateMessages.rightMessages}
+            onEnter={sendDM.sendRightPlayer}
+            width={"20vw"}
+            height={"40%"}
+          />
         </div>
       </div>
     </>

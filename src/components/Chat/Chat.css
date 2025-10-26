@@ -1,0 +1,74 @@
+.chat {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+
+	box-shadow: var(--shadow-medium);
+	border-radius: 0 0 1rem 1rem;
+
+	width: 30vw;
+	height: 100%;
+}
+
+.chat-input {
+	width: 100%;
+	background-color: var(--color-chatdisplay);
+	display: grid;
+	place-items: center;
+	border-radius: 0 0 1rem 1rem;
+}
+
+.chat-input input {
+	font-size: 20px;
+	width: 90%;
+	box-sizing: border-box;
+	border: none;
+	border-radius: 0.8em;
+	padding: 10px;
+	margin: 0.8em auto;
+	/* Ostali stilovi za input polje */
+	background-color: var(--color-textbox);
+
+	color: var(--color-text);
+
+}
+
+.chat-input input:hover {
+	opacity: 0.66;
+}
+
+.chat-display ul {
+	padding: 0 0;
+	margin: 2% 2%;
+}
+
+.chat-display li {
+	overflow-wrap: break-word;
+	font-size: 25px;
+}
+
+.chat-display {
+	display: flex;
+	flex-direction: column;
+	position: static;
+
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: var(--color-chatdisplay);
+	width: 100%;
+	height: 100%;
+
+	white-space: normal;
+	overflow-wrap: break-word;
+	text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+	.chat {
+		width: 80vw;
+		max-width: 90%;
+		height: 60vh;
+	}
+}

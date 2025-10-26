@@ -26,8 +26,13 @@ export function useLobbyData() {
     wordChain: [],
     turnIndex: 0,
     word: "",
-    userId: 0,
+    userId: 0, //Klient id
     votedFor: "",
+  });
+
+  const [privateMessages, setPrivateMessages] = useState({
+    leftMessages: [],
+    rightMessages: [],
   });
 
   useEffect(() => {
@@ -58,6 +63,20 @@ export function useLobbyData() {
             setLobbyStatus((prevStatus) => ({
               ...prevStatus,
               gameStatus: data.gameStatus,
+            }));
+            break;
+          }
+          case "private_left_message": {
+            setPrivateMessages((prevMessages) => ({
+              ...prevMessages,
+              leftMessages: [...prevMessages.leftMessages, data.msg],
+            }));
+            break;
+          }
+          case "private_right_message": {
+            setPrivateMessages((prevMessages) => ({
+              ...prevMessages,
+              rightMessages: [...prevMessages.rightMessages, data.msg],
             }));
             break;
           }
@@ -122,6 +141,7 @@ export function useLobbyData() {
               ...prevStatus,
               gameStatus: data.gameStatus,
               state: data.state,
+              players: data.players,
             }));
             break;
           }
@@ -193,6 +213,53 @@ export function useLobbyData() {
     );
   };
 
+  let leftPlayerID = 0;
+  let rightPlayerID = 0;
+  let sendDM = null;
+  if (lobbyStatus.state === "playing") {
+    const myID = lobbyStatus.userId;
+    const players = lobbyStatus.players;
+    const myIndex = players.findIndex((player) => player.id === myID);
+
+    if (myIndex === -1) {
+      console.log("findIndex did not find");
+    }
+    const arrLen = lobbyStatus.players.length;
+    const leftIndex = (myIndex + 1 + arrLen) % arrLen;
+    const rightIndex = (myIndex - 1 + arrLen) % arrLen;
+
+    leftPlayerID = players[leftIndex].id;
+    rightPlayerID = players[rightIndex].id;
+
+    console.log(`${leftPlayerID} ${myID} ${rightPlayerID}`);
+  }
+
+  const sendLeftPlayer = (text) => {
+    send(
+      JSON.stringify({
+        action: "send_left",
+        toUser: leftPlayerID,
+        fromUser: lobbyStatus.userId,
+        msg: text,
+      }),
+    );
+  };
+
+  const sendRightPlayer = (text) => {
+    send(
+      JSON.stringify({
+        action: "send_right",
+        toUser: rightPlayerID,
+        fromUser: lobbyStatus.userId,
+        msg: text,
+      }),
+    );
+  };
+
+  if (lobbyStatus.state == "playing") {
+    sendDM = { sendLeftPlayer, sendRightPlayer };
+  }
+
   return {
     isValid,
     sendMessage,
@@ -204,5 +271,7 @@ export function useLobbyData() {
     countdown,
     isAlertOpen,
     onCloseAlert,
+    sendDM,
+    privateMessages,
   };
 }

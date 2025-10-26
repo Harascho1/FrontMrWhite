@@ -1,56 +1,31 @@
-@media (prefers-color-scheme: dark) {
-  :root {
-    font-family: system-ui,
-      Helvetica,
-      Avenir,
-      Arial,
-      sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
+:root {
+  --color-button-border-hover: #cadfe0;
 
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+  --color-button-primary: #fffade;
+  --color-button-primary-hover: #FFFCEA;
 
+  --color-button-submit: #473C00;
+  --color-button-submit-hover: #A28900;
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
+  --color-text: #474747;
 
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-}
+  --color-input-focus-border: #474747;
+  --color-input-hover: #FFFCEA;
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-button-border-hover: #cadfe0;
+  --color-chatdisplay: #FDFBD4;
+  --color-playersList: #FDFBD4;
+  --color-userBox: #FDFBD4;
+  --color-moreInfoBox: #FDFBD4;
 
-    --color-button-primary: #fffade;
-    --color-button-primary-hover: #FFFCEA;
+  --color-rectangle: #FDFBD4;
 
-    --color-button-submit: #473C00;
-    --color-button-submit-hover: #A28900;
+  --color-alertWindow: #FDFBD4;
 
-    --color-text: #474747;
-
-    --color-input-focus-border: #474747;
-    --color-input-hover: #FFFCEA;
-
-    --color-chatdisplay: #FDFBD4;
-    --color-playersList: #FDFBD4;
-    --color-userBox: #FDFBD4;
-    --color-moreInfoBox: #FDFBD4;
-
-    --color-rectangle: #FDFBD4;
-
-    --color-alertWindow: #FDFBD4;
-
-    --color-textbox: #e3dcac;
+  --color-textbox: #e3dcac;
 
 
-    --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.2);
+  --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.2);
 
-    color: #213547;
-    background-color: #e8e5d1;
-  }
+  color: #213547;
+  background-color: #e8e5d1;
 }

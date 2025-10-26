@@ -2,9 +2,15 @@
 	position: static;
 	display: inherit;
 
+	border: var(--color-chatdisplay) 2px solid;
+	border-radius: 16px 16px 0px 0px;
+	background-color: var(--color-textbox);
+
+
 	overflow: auto;
-	background-color: var(--color-chatdisplay);
-	width: 100%;
+	width: 99.5%;
+	height: 70vh;
+
 }
 
 .chat-box ul {
@@ -18,7 +24,6 @@
 
 @media (max-width: 768px) {
 	.chat-box {
-		width: 80vw;
 		height: 60vh;
 	}
 }

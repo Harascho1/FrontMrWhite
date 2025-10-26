@@ -8,17 +8,15 @@ ul {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	margin: 0 10%;
-	height: 100%;
+	margin: 0;
+	height: 70vh;
 }
 
 .main-div {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 2%;
+	margin: 2% auto 0 auto;
 }
 
 .player-grid-container {
@@ -111,8 +109,8 @@ ul {
 }
 
 .left-column {
-	margin-left: 2%;
-	margin-top: 2%;
+	width: 20vw;
+	margin: 2% 0 0 2%;
 }
 
 
@@ -121,7 +119,7 @@ ul {
 	flex-direction: column;
 	background-color: var(--color-playersList);
 	box-shadow: var(--shadow-medium);
-	width: 200px;
+	width: 90%;
 	height: 400px;
 }
 
@@ -148,7 +146,7 @@ ul {
 
 	margin: 1em auto;
 	border-radius: 0.01rem;
-	width: 800px;
+	width: 40vw;
 	height: auto;
 
 	border-radius: 0.01rem;
@@ -204,14 +202,18 @@ ul {
 	align-items: center;
 	grid-area: 1/1;
 
-
-	width: 60%;
+	margin-top: 12px;
+	width: 90%;
+	max-width: 600px;
+	/* Ograničava maksimalnu širinu */
 	height: 100%;
 
 	min-height: 200px;
-	max-height: 200px;
+	max-height: 300px;
 
 	border-radius: 10%;
+	overflow: hidden;
+	/* Sprečava prekoračenje sadržaja */
 
 	z-index: 2;
 }
@@ -243,6 +245,13 @@ h2 {
 
 }
 
+.right-chat,
+.left-chat {
+	display: flex;
+	align-items: center;
+	margin: 0 2%;
+}
+
 .start-game-btn button {
 	box-shadow: var(--shadow-medium);
 	width: 150px;
@@ -257,10 +266,24 @@ h2 {
 		display: none;
 	}
 
+	.right-chat {
+		display: none;
+	}
+
+	.left-chat {
+		display: none;
+	}
+
 	.main-div {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		margin: 10px auto 0 auto;
+	}
+
+	.player-circle {
+		width: 25px;
+		height: 25px;
 	}
 
 	.right-column {
@@ -284,6 +307,7 @@ h2 {
 	}
 
 	.left-column {
+		width: 0;
 		margin: 0;
 	}
 
@@ -291,21 +315,26 @@ h2 {
 		padding: 1%;
 	}
 
+	.chat-div-playing {
+		width: 100%;
+	}
+
 	.players-overlay {
 		top: 0;
 		position: absolute;
+		background: rgba(0, 0, 0, 0.4);
+		backdrop-filter: blur(3px);
 		width: 100vw;
 		height: 100vh;
 	}
 
-
 	.players-box.active {
-		opacity: 0.7;
+		opacity: 1;
 		display: flex;
 		position: absolute;
-		height: 80%;
+		height: 50%;
 		width: 60%;
-		left: 0;
+		left: 2vw;
 		z-index: 100;
 	}
 

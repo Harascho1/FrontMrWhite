@@ -1,4 +1,5 @@
 import VoteButton from "../../components/VoteButton/VoteButton.jsx";
+
 export default function LobbyVoting({
   lobbyStatus,
   send,

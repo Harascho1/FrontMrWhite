@@ -10,7 +10,6 @@ async function fetchIsOwner(token, key) {
       },
     });
     const isOwner = await response.data.isOwner;
-    console.log(isOwner);
     return isOwner;
   } catch (err) {
     console.error(err);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./MessageTextBox.css";
 
-export default function MessageTextBox({ onEnter }) {
+export default function MessageTextBox({ onEnter, disabled }) {
   const [value, setValue] = useState("");
 
   const handleChanges = (event) => {
@@ -9,7 +9,7 @@ export default function MessageTextBox({ onEnter }) {
   };
 
   const handleSend = () => {
-    if (value.trim() !== "") {
+    if (value.trim() !== "" && !disabled) {
       onEnter(value);
       setValue(""); // Cistimo input polje
     }
@@ -29,6 +29,9 @@ export default function MessageTextBox({ onEnter }) {
         value={value}
         onChange={handleChanges}
         onKeyDown={handleKeyDown}
+        disabled={disabled}
+        placeholder={disabled ? "Wait for your turn to chat" : "Type your message..."}
+        className={disabled ? "disabled" : ""}
       />
     </div>
   );
