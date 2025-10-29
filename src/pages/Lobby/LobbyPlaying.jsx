@@ -2,6 +2,8 @@ import ChatDisplay from "../../components/ChatDisplay/ChatDisplay";
 import MessageTextBox from "../../components/MessageTextBox/MessageTextBox";
 import Table from "../../assets/sto12.svg";
 import Chat from "../../components/Chat/Chat";
+import ChatIcon from "../../assets/chat.svg";
+import { useState } from "react";
 
 export default function LobbyPlaying({
   lobbyStatus,
@@ -79,6 +81,8 @@ export default function LobbyPlaying({
       (obj) => obj.id === lobbyStatus.turnIndex,
     );
   }
+  const [lopen, setLOpen] = useState(false);
+  const [ropen, setROpen] = useState(false);
 
   return (
     <>
@@ -91,12 +95,17 @@ export default function LobbyPlaying({
         <h1 style={{ textAlign: "center" }}>{writter.name} turn</h1>
       )}
       <div className="lobby-container">
-        <div className="left-chat">
+        <div className={`left-chat-toggle`} onClick={() => setLOpen(!lopen)}>
+          <button>
+            <img src={ChatIcon} style={{ width: "35px" }} />
+          </button>
+        </div>
+        <div className={`left-chat ${lopen ? "lactive" : ""}`}>
           <Chat
             messages={privateMessages.leftMessages}
             onEnter={sendDM.sendLeftPlayer}
-            width={"20vw"}
-            height={"40%"}
+            width={`${lopen ? "70vw" : "20vw"}`}
+            height={`${lopen ? "50vh" : "40%"}`}
           />
         </div>
         <div className="main-div">
@@ -113,12 +122,29 @@ export default function LobbyPlaying({
             />
           </div>
         </div>
-        <div className="right-chat">
+        <div className="right-chat-toggle" onClick={() => setROpen(!ropen)}>
+          <button>
+            <img src={ChatIcon} style={{ width: "35px" }} />
+          </button>
+        </div>
+        {ropen && (
+          <div
+            className="playing-overlay"
+            onClick={() => setROpen(false)}
+          ></div>
+        )}
+        {lopen && (
+          <div
+            className="playing-overlay"
+            onClick={() => setLOpen(false)}
+          ></div>
+        )}
+        <div className={`right-chat ${ropen ? "ractive" : ""}`}>
           <Chat
             messages={privateMessages.rightMessages}
             onEnter={sendDM.sendRightPlayer}
-            width={"20vw"}
-            height={"40%"}
+            width={`${ropen ? "70vw" : "20vw"}`}
+            height={`${ropen ? "50vh" : "40%"}`}
           />
         </div>
       </div>

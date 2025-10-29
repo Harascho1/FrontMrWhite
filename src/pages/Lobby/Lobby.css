@@ -257,7 +257,11 @@ h2 {
 	width: 150px;
 	height: 50px;
 	font-size: 20px;
+}
 
+.left-chat-toggle,
+.right-chat-toggle {
+	display: none;
 }
 
 @media (max-width: 768px) {
@@ -338,4 +342,52 @@ h2 {
 		z-index: 100;
 	}
 
+	.left-chat-toggle,
+	.right-chat-toggle {
+		display: inline;
+		position: absolute;
+		bottom: 1vh;
+	}
+
+	.left-chat-toggle {
+		left: 1vh;
+	}
+
+	.right-chat-toggle {
+		right: 1vh;
+		transform: scaleX(-1);
+	}
+
+	.playing-overlay {
+		top: 0;
+		position: absolute;
+		background: rgba(0, 0, 0, 0.4);
+		backdrop-filter: blur(3px);
+		width: 100vw;
+		height: 100vh;
+		z-index: 3;
+
+	}
+
+	.left-chat.lactive {
+		left: 1vw;
+	}
+
+	.right-chat.ractive {
+		right: 1vw;
+	}
+
+	.right-chat.ractive,
+	.left-chat.lactive {
+		display: inline;
+		position: absolute;
+
+		width: auto;
+		height: auto;
+
+		align-items: center;
+		z-index: 4;
+
+		margin: 0 0;
+	}
 }
