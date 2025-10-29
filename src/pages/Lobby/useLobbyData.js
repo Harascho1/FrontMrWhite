@@ -69,14 +69,14 @@ export function useLobbyData() {
           case "private_left_message": {
             setPrivateMessages((prevMessages) => ({
               ...prevMessages,
-              leftMessages: [...prevMessages.leftMessages, data.msg],
+              leftMessages: data.msg,
             }));
             break;
           }
           case "private_right_message": {
             setPrivateMessages((prevMessages) => ({
               ...prevMessages,
-              rightMessages: [...prevMessages.rightMessages, data.msg],
+              rightMessages: data.msg,
             }));
             break;
           }
@@ -143,6 +143,10 @@ export function useLobbyData() {
               state: data.state,
               players: data.players,
             }));
+            setPrivateMessages({
+              leftMessages: [],
+              rightMessages: [],
+            });
             break;
           }
           case "vote_list": {
@@ -222,7 +226,7 @@ export function useLobbyData() {
     const myIndex = players.findIndex((player) => player.id === myID);
 
     if (myIndex === -1) {
-      console.log("findIndex did not find");
+      console.error("findIndex did not find");
     }
     const arrLen = lobbyStatus.players.length;
     const leftIndex = (myIndex + 1 + arrLen) % arrLen;
@@ -230,8 +234,6 @@ export function useLobbyData() {
 
     leftPlayerID = players[leftIndex].id;
     rightPlayerID = players[rightIndex].id;
-
-    console.log(`${leftPlayerID} ${myID} ${rightPlayerID}`);
   }
 
   const sendLeftPlayer = (text) => {
