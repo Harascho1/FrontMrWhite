@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./UserProfile.css";
+import api from "../../services/api";
 
 export function UserProfile() {
   const [isLogIn, setLogIn] = useState(false);
@@ -11,21 +12,18 @@ export function UserProfile() {
       setLogIn(false);
       return;
     }
-    fetch("http://localhost:8080/api/v1/users/getUsername", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUsername(data.username);
-        setLogIn(true);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLogIn(false);
+    try {
+      const response = api.get(`/users/getUsername`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+      setUsername(response.data.username);
+      setLogIn(true);
+    } catch (err) {
+      console.error(err);
+      setLogIn(false);
+    }
   };
 
   useEffect(checkIsLogIn, []);

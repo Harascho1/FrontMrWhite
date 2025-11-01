@@ -12,8 +12,10 @@ export function useLobbyData() {
     flag: false,
     msg: "",
   });
+  const protocol = window.location.protocol === "https:" ? "wss:" : "ws";
+  const host = window.location.host;
   const { send, readyState, lastMessage } = useWebSocket(
-    `ws://localhost:8080/api/v1/gameroom/ws`,
+    `${protocol}//${host}/api/v1/gameroom/ws`,
   );
   const [lobbyStatus, setLobbyStatus] = useState({
     action: "lobby_status",

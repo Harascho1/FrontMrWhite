@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import api from "../services/api";
 import { AnimatePresence, motion } from "framer-motion";
 import "./UsernameModal.css";
 
@@ -133,24 +134,10 @@ const login = async (username) => {
   }
 
   try {
-    const response = await fetch("http://localhost:8080/api/v1/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        username: username,
-      }),
+    const res = await api.post("login", {
+      username: username,
     });
-
-    if (!response.ok) {
-      throw new Error(
-        `Server error: ${response.status} ${response.statusText}`,
-      );
-    }
-    const data = await response.json();
-    localStorage.setItem("token", data.token);
+    localStorage.setItem("token", res.data.token);
     return true;
   } catch (err) {
     console.error("Error: ", err);

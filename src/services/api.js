@@ -1,7 +1,10 @@
 import axios from "axios";
 
+const protocol = window.location.protocol;
+const host = window.location.host;
+
 const api = axios.create({
-  baseURL: "http://localhost:8080/api/v1",
+  baseURL: `${protocol}//${host}/api/v1`,
   withCredentials: true,
 });
 
