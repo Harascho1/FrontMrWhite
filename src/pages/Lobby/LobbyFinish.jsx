@@ -17,6 +17,7 @@ export default function LobbyFinished({ lobbyStatus, countdown }) {
           {countdown.text + ": " + countdown.countdown}
         </h1>
       )}
+      <h1>Impostor was: {lobbyStatus.impostor}</h1>
       {gameResult()}
     </>
   );

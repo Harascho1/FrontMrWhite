@@ -1,0 +1,22 @@
+.time-bar-container {
+	display: grid;
+	grid-area: 1/1;
+	width: 100%;
+	max-width: 200px;
+	height: 30px;
+	background-color: var();
+	border-radius: 5px;
+	overflow: hidden;
+	z-index: 1001;
+	border: 5px outset black;
+}
+
+.time-bar {
+	height: 60px;
+	text-align: center;
+	line-height: 30px;
+	color: white;
+	font-weight: bold;
+
+	transition: width 1s linear;
+}

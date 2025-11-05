@@ -20,6 +20,7 @@ export default function Lobby() {
     onCloseAlert,
     sendDM,
     privateMessages,
+    timer,
   } = useLobbyData();
 
   if (!isValid) {
@@ -38,6 +39,7 @@ export default function Lobby() {
       onCloseAlert={onCloseAlert}
       sendDM={sendDM}
       privateMessages={privateMessages}
+      timer={timer}
     />
   );
 }
@@ -58,6 +60,7 @@ function ValidLobby({
   onCloseAlert,
   sendDM,
   privateMessages,
+  timer,
 }) {
   const renderLobbyContent = () => {
     switch (lobbyStatus.state) {
@@ -71,7 +74,6 @@ function ValidLobby({
             readyState={readyState}
           />
         );
-        break;
       case "playing":
         if (lobbyStatus.gameStatus === "playing")
           return (
@@ -81,6 +83,7 @@ function ValidLobby({
               sendWord={sendWord}
               sendDM={sendDM}
               privateMessages={privateMessages}
+              timer={timer}
             />
           );
         else if (lobbyStatus.gameStatus === "voting")

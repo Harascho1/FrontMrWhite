@@ -72,6 +72,11 @@ button {
   transition: transform 0.5s ease-out;
 }
 
+button.disabled {
+  transition: 0;
+
+}
+
 button:hover {
   border-color: var(--color-button-border-hover);
   transform: scale(0.9);

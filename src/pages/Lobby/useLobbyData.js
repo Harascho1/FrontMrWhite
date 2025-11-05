@@ -32,9 +32,12 @@ export function useLobbyData() {
     wordChain: [],
     turnIndex: 0,
     word: "",
-    userId: 0, //Klient id
+    userId: 0,
     votedFor: "",
+    impostor: "",
   });
+
+  const [timer, setTimer] = useState(0);
 
   const [privateMessages, setPrivateMessages] = useState({
     leftMessages: [],
@@ -72,7 +75,8 @@ export function useLobbyData() {
           setIsValid(false);
           return;
         }
-        console.log(data);
+        //TODO: Good for debugg
+        //console.log(data);
         switch (data.action) {
           case "game_status": {
             setLobbyStatus((prevStatus) => ({
@@ -143,6 +147,7 @@ export function useLobbyData() {
             break;
           }
           case "type": {
+            setTimer(data.time);
             setLobbyStatus((prevStatus) => ({
               ...prevStatus,
               wordChain: data.wordChain,
@@ -157,11 +162,14 @@ export function useLobbyData() {
               gameStatus: data.gameStatus,
               state: data.state,
               players: data.players,
+              impostor: data.impostor,
             }));
-            setPrivateMessages({
-              leftMessages: [],
-              rightMessages: [],
-            });
+            if (data.gameStatus !== "playing") {
+              setPrivateMessages({
+                leftMessages: [],
+                rightMessages: [],
+              });
+            }
             break;
           }
           case "vote_list": {
@@ -232,36 +240,38 @@ export function useLobbyData() {
     );
   };
 
-  let leftPlayerID = 0;
-  let rightPlayerID = 0;
+  let leftPlayer = null;
+  let rightPlayer = null;
   let sendDM = null;
   if (lobbyStatus.state === "playing") {
     const myID = lobbyStatus.userId;
-    const players = lobbyStatus.players;
+    const players = lobbyStatus.players.filter(
+      (player) => player.status === "active",
+    );
     const myIndex = players.findIndex((player) => player.id === myID);
 
     if (myIndex === -1) {
       console.error("findIndex did not find");
     }
-    const arrLen = lobbyStatus.players.length;
+    const arrLen = players.length;
 
     //TODO: Need to test this
-    const leftIndex = (myIndex + 1 + arrLen) % arrLen;
+    let leftIndex = (myIndex + 1 + arrLen) % arrLen;
     while (true) {
-      leftPlayerID = players[leftIndex].id;
-      if (players[leftPlayerID].status === "active") {
+      leftPlayer = players[leftIndex];
+      if (leftPlayer.status === "active") {
         break;
       }
       leftIndex++;
       leftIndex %= arrLen;
     }
-    const rightIndex = (myIndex - 1 + arrLen) % arrLen;
+    let rightIndex = (myIndex - 1 + arrLen) % arrLen;
     while (true) {
-      rightPlayerID = players[rightIndex].id;
-      if (players[rightPlayerID].status === "active") {
+      rightPlayer = players[rightIndex];
+      if (rightPlayer.status === "active") {
         break;
       }
-      rightIndex++;
+      rightIndex--;
       rightIndex %= arrLen;
     }
   }
@@ -270,7 +280,7 @@ export function useLobbyData() {
     send(
       JSON.stringify({
         action: "send_left",
-        toUser: leftPlayerID,
+        toUser: leftPlayer.id,
         fromUser: lobbyStatus.userId,
         msg: text,
       }),
@@ -281,7 +291,7 @@ export function useLobbyData() {
     send(
       JSON.stringify({
         action: "send_right",
-        toUser: rightPlayerID,
+        toUser: rightPlayer.id,
         fromUser: lobbyStatus.userId,
         msg: text,
       }),
@@ -305,5 +315,6 @@ export function useLobbyData() {
     onCloseAlert,
     sendDM,
     privateMessages,
+    timer,
   };
 }

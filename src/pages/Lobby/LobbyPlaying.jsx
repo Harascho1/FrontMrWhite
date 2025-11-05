@@ -4,6 +4,7 @@ import Table from "../../assets/sto12.svg";
 import Chat from "../../components/Chat/Chat";
 import ChatIcon from "../../assets/chat.svg";
 import { useMemo, useState } from "react";
+import TimeBar from "../../components/TimeBar/TimeBar";
 
 export default function LobbyPlaying({
   lobbyStatus,
@@ -11,6 +12,7 @@ export default function LobbyPlaying({
   sendWord,
   sendDM,
   privateMessages,
+  timer,
 }) {
   // NOTE: Ovo moze da pozluzi mozda posle.!.
   /*
@@ -40,8 +42,8 @@ export default function LobbyPlaying({
     );
   }
 
+  const players = lobbyStatus.players;
   const renderPlayersOnTable = () => {
-    const players = lobbyStatus.players;
     const activePlayers = players.filter(
       (player) => player.status === "active",
     );
@@ -51,9 +53,6 @@ export default function LobbyPlaying({
     const radiusY = 45;
     const centerX = 50;
     const centerY = 50;
-
-    // TODO: ukljuci ovo da prikazes igrace koji su izbaceni
-    //const kickedPlayers = map.players((player) => player.status == "kicked");
 
     return (
       <>
@@ -92,18 +91,12 @@ export default function LobbyPlaying({
     );
   };
 
-  const renderTimer = useMemo(() => {
-    const time = 40;
-    return (
-      <p style={{ display: "grid", gridArea: "1/1", fontSize: "3.5vw" }}>
-        Time is {time}
-      </p>
-    );
-  }, []);
-
   const [lopen, setLOpen] = useState(false);
   const [ropen, setROpen] = useState(false);
 
+  const myID = lobbyStatus.userId;
+  const kickedPlayers = players.filter((player) => player.status == "kicked");
+  const hasKicked = !!kickedPlayers.find((obj) => obj.id === myID);
   return (
     <>
       {countdown.countdown !== 0 && (
@@ -122,6 +115,7 @@ export default function LobbyPlaying({
         </div>
         <div className={`left-chat ${lopen ? "lactive" : ""}`}>
           <Chat
+            disabled={hasKicked}
             messages={privateMessages.leftMessages}
             onEnter={sendDM.sendLeftPlayer}
             width={`${lopen ? "70vw" : "20vw"}`}
@@ -131,8 +125,8 @@ export default function LobbyPlaying({
         <div className="main-div">
           <div className="chat-div-playing">
             <img src={Table} className="table-container" />
+            <TimeBar key={`${timer}-${lobbyStatus.turnIndex}-${lobbyStatus.wordChain.length}`} timeInMS={timer} />
             {renderPlayersOnTable()}
-            {renderTimer}
           </div>
           <div className="chat-stack">
             <h2 style={{ textAlign: "center" }}>Word is {lobbyStatus.word}</h2>
@@ -162,6 +156,7 @@ export default function LobbyPlaying({
         )}
         <div className={`right-chat ${ropen ? "ractive" : ""}`}>
           <Chat
+            disabled={hasKicked}
             messages={privateMessages.rightMessages}
             onEnter={sendDM.sendRightPlayer}
             width={`${ropen ? "70vw" : "20vw"}`}
