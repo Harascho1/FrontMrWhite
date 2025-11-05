@@ -1,7 +1,12 @@
 ul {
+	display: flex;
+	flex-direction: column;
+	text-align: left;
 	list-style-type: none;
-	padding: 0% 10%;
-	margin: 0 2%;
+	padding: 0% 0%;
+	margin: 0 0%;
+	gap: 0.3em;
+	box-sizing: border-box;
 }
 
 .lobby-container {
@@ -9,7 +14,13 @@ ul {
 	flex-direction: row;
 	justify-content: space-between;
 	margin: 0;
-	height: 70vh;
+	height: 80vh;
+}
+
+.players-box h2 {
+	background-color: var(--color-h2-background);
+	border-radius: inherit;
+	margin-bottom: 10px;
 }
 
 .main-div {
@@ -38,7 +49,6 @@ ul {
 	flex-direction: column;
 	align-items: center;
 	width: 400px;
-	gap: 40px;
 	margin-top: 2%;
 	margin-right: 2%;
 }
@@ -50,6 +60,8 @@ ul {
 }
 
 .more-info-box {
+	border-radius: 10px;
+	border: 5px solid var(--color-moreInfoBox-border);
 	width: 80%;
 	height: auto;
 	background-color: var(--color-moreInfoBox);
@@ -109,13 +121,25 @@ ul {
 }
 
 .left-column {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
 	width: 20vw;
 	margin: 2% 0 0 2%;
+}
+
+.left-column .more-info-box {
+	margin-top: auto;
+}
+
+.more-info-box {
+	margin-top: auto;
 }
 
 
 .players-box {
 	display: flex;
+	border-radius: 20px 20px 0 0;
 	flex-direction: column;
 	background-color: var(--color-playersList);
 	box-shadow: var(--shadow-medium);
@@ -182,7 +206,11 @@ ul {
 }
 
 .player-circle.me {
-	background-color: mediumseagreen;
+	background-color: var(--color-writter);
+}
+
+.player-circle.writer {
+	border: powderblue 10px solid;
 }
 
 .table-container {
@@ -202,7 +230,6 @@ ul {
 	align-items: center;
 	grid-area: 1/1;
 
-	margin-top: 12px;
 	width: 90%;
 	max-width: 600px;
 	/* Ograničava maksimalnu širinu */
@@ -228,8 +255,24 @@ li::marker {
 	content: none;
 }
 
-li {
+.players-box li {
+	width: 100%;
+	background-color: var(--color-li);
+	padding: 0.3em 1em;
 	font-size: 1.5rem;
+}
+
+.chat-display li {
+	border-bottom: 2px solid var(--color-moreInfoBox-border);
+	box-sizing: content-box;
+	padding: 0 0;
+}
+
+li {
+	width: 100%;
+	padding: 0 0.5em;
+	font-size: 1.5rem;
+	box-sizing: border-box;
 }
 
 h2 {
@@ -239,7 +282,7 @@ h2 {
 
 .start-game-btn {
 	display: flex;
-	margin: 5% 0;
+	margin: 2% 0;
 	align-items: center;
 	justify-content: center;
 

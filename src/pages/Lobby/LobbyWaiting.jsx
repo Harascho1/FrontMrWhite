@@ -1,5 +1,5 @@
 import StartGameButton from "../../components/StartGameButton/StartGameButton";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import UserIcon from "../../assets/user-svgrepo-com.svg";
 import Chat from "../../components/Chat/Chat";
 
@@ -13,7 +13,7 @@ export default function LobbyWaiting({
   const [open, setOpen] = useState(false);
 
   const ws = { send, readyState };
-  const moreInforBox = () => {
+  const moreInforBox = useMemo(() => {
     return (
       <div className="more-info-box">
         <p>
@@ -27,25 +27,28 @@ export default function LobbyWaiting({
         </p>
       </div>
     );
-  };
+  }, []);
 
-  const motivationQuates = () => {
+  const motivationQuates = useMemo(() => {
     return (
       <div className="more-info-box">
         <p>Every word is a new challenge — give it your best shot!</p>
       </div>
     );
-  };
+  }, []);
 
-  const inspirationQuate = () => {
+  const inspirationQuate = useMemo(() => {
     return (
       <div className="more-info-box">
         <p>Because sometimes, the smallest games bring the biggest joy.</p>
       </div>
     );
-  };
+  }, []);
 
-  const renderPlayersBox = () => {
+  const players = lobbyStatus.players;
+  const playersDep = JSON.stringify(players);
+
+  const renderPlayersBox = useMemo(() => {
     return (
       <>
         <div className="players-toggle" onClick={() => setOpen(!open)}>
@@ -59,7 +62,7 @@ export default function LobbyWaiting({
         <div className={`players-box ${open ? "active" : ""}`}>
           <h2>Players:</h2>
           <ul>
-            {lobbyStatus.players.map((player) => {
+            {players.map((player) => {
               const isMe = player.id === lobbyStatus.userId;
               const playerStype = { fontWeight: isMe ? "bold" : "normal" };
               return (
@@ -72,20 +75,20 @@ export default function LobbyWaiting({
         </div>
       </>
     );
-  };
+  }, [playersDep]);
 
   return (
     <>
       <div className="lobby-container">
         <div className="left-column">
-          {renderPlayersBox()}
-          {motivationQuates()}
+          {renderPlayersBox}
+          {motivationQuates}
         </div>
         <div className="main-div">
-          <Chat onEnter={sendMessage} messages={messages} />
+          <Chat onEnter={sendMessage} messages={messages} autoScroll={true} />
         </div>
         <div className="right-column">
-          {moreInforBox()} {inspirationQuate()}
+          {moreInforBox} {inspirationQuate}
         </div>
       </div>
       <div className="start-game-btn">

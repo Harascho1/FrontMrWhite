@@ -1,4 +1,5 @@
 import VoteButton from "../../components/VoteButton/VoteButton.jsx";
+import { useMemo } from "react";
 
 export default function LobbyVoting({
   lobbyStatus,
@@ -6,27 +7,39 @@ export default function LobbyVoting({
   readyState,
   countdown,
 }) {
-  const ws = { send, readyState };
-  const players = lobbyStatus.votingList;
-  const gridSize = Math.ceil(Math.sqrt(players.length));
-  const totalCells = gridSize * gridSize;
-  const cells = players.slice(0, totalCells);
+  const wsWrapper = useMemo(
+    () => ({
+      send: send,
+      readyState: readyState,
+    }),
+    [send, readyState],
+  );
 
   const myID = lobbyStatus.userId;
+  const players = lobbyStatus.votingList.filter((player) => player.id !== myID);
   const voters = lobbyStatus.playersWhoVote || [];
   const didIVote = voters.find((obj) => obj.id === myID);
   const hasVoted = !!didIVote;
-  console.log(didIVote);
+  const wasIKicked = lobbyStatus.players.find(
+    (obj) => obj.id === myID && obj.status === "kicked",
+  );
+  const hasKicked = !!wasIKicked;
 
-  while (cells.length < totalCells) {
-    cells.push({ id: `empty-${cells.length}`, empty: true });
-  }
+  const playersDependency = JSON.stringify(players);
+  const votersDependency = JSON.stringify(voters);
 
   const renderYouVoted = () => {
     return <h1 style={{ textAlign: "center" }}> You locked in your vote</h1>;
   };
 
-  const printCells = () => {
+  const printCells = useMemo(() => {
+    const gridSize = Math.ceil(Math.sqrt(players.length));
+    const totalCells = gridSize * gridSize;
+    const cells = players.slice(0, totalCells);
+    while (cells.length < totalCells) {
+      cells.push({ id: `empty-${cells.length}`, empty: true });
+    }
+
     return (
       <div
         className="player-grid-container"
@@ -36,7 +49,7 @@ export default function LobbyVoting({
           <div key={player.id} className="player-cell">
             {!player.empty && (
               <VoteButton
-                ws={ws}
+                ws={wsWrapper}
                 player={player}
                 btnClassName={`player-button ${didIVote ? "disabled" : ""}`}
                 dissable={hasVoted}
@@ -46,7 +59,14 @@ export default function LobbyVoting({
         ))}
       </div>
     );
-  };
+  }, [
+    playersDependency,
+    votersDependency,
+    wsWrapper,
+    myID,
+    didIVote,
+    hasVoted,
+  ]);
 
   return (
     <>
@@ -56,7 +76,7 @@ export default function LobbyVoting({
           {countdown.text + ": " + countdown.countdown}
         </h1>
       )}
-      {printCells()}
+      {!hasKicked && printCells}
       {hasVoted && renderYouVoted()}
     </>
   );

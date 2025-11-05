@@ -1,7 +1,10 @@
 import axios from "axios";
 
 const protocol = window.location.protocol;
-const host = window.location.host;
+const host =
+  window.location.host === "localhost:5173"
+    ? "localhost:8080"
+    : window.location.host;
 
 const api = axios.create({
   baseURL: `${protocol}//${host}/api/v1`,

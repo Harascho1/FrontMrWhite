@@ -26,6 +26,15 @@
 
   --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.2);
 
+  --color-li: #87878720;
+  --color-h2-background: #46323930;
+
+  --color-moreInfoBox-border: #46323931;
+
+  --color-playersList-border: #46323931;
+
+  --color-writter: #38A700;
+
   color: #213547;
   background-color: #e8e5d1;
 }

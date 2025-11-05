@@ -138,6 +138,7 @@ const login = async (username) => {
       username: username,
     });
     localStorage.setItem("token", res.data.token);
+    window.dispatchEvent(new Event("tokenReady"));
     return true;
   } catch (err) {
     console.error("Error: ", err);

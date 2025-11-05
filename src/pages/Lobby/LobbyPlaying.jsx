@@ -3,7 +3,7 @@ import MessageTextBox from "../../components/MessageTextBox/MessageTextBox";
 import Table from "../../assets/sto12.svg";
 import Chat from "../../components/Chat/Chat";
 import ChatIcon from "../../assets/chat.svg";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export default function LobbyPlaying({
   lobbyStatus,
@@ -33,20 +33,32 @@ export default function LobbyPlaying({
     );
   };
   */
+  let writter = null;
+  if (lobbyStatus.turnIndex !== 0) {
+    writter = lobbyStatus.players.find(
+      (obj) => obj.id === lobbyStatus.turnIndex,
+    );
+  }
 
   const renderPlayersOnTable = () => {
     const players = lobbyStatus.players;
-    const playersCount = players.length;
+    const activePlayers = players.filter(
+      (player) => player.status === "active",
+    );
+    const playersCount = activePlayers.length;
 
     const radiusX = 45;
     const radiusY = 45;
     const centerX = 50;
     const centerY = 50;
 
+    // TODO: ukljuci ovo da prikazes igrace koji su izbaceni
+    //const kickedPlayers = map.players((player) => player.status == "kicked");
+
     return (
       <>
         <div className="players-position">
-          {players.map((player, index) => {
+          {activePlayers.map((player, index) => {
             const angle = (index / playersCount) * 2 * Math.PI - Math.PI / 2;
 
             const x = centerX + radiusX * Math.cos(angle);
@@ -60,10 +72,15 @@ export default function LobbyPlaying({
 
             const isMe = player.id === lobbyStatus.userId;
 
+            let isWritter = false;
+            if (writter != null) {
+              isWritter = player.id === writter.id;
+            }
+
             return (
               <div
                 key={player.id}
-                className={`player-circle ${isMe ? "me" : ""}`}
+                className={`player-circle ${isMe ? "me" : ""} ${isWritter ? "writer" : ""}`}
                 style={playerStyle}
               >
                 {player.name.substring(0, 1)}
@@ -75,12 +92,15 @@ export default function LobbyPlaying({
     );
   };
 
-  let writter = null;
-  if (lobbyStatus.turnIndex !== 0) {
-    writter = lobbyStatus.players.find(
-      (obj) => obj.id === lobbyStatus.turnIndex,
+  const renderTimer = useMemo(() => {
+    const time = 40;
+    return (
+      <p style={{ display: "grid", gridArea: "1/1", fontSize: "3.5vw" }}>
+        Time is {time}
+      </p>
     );
-  }
+  }, []);
+
   const [lopen, setLOpen] = useState(false);
   const [ropen, setROpen] = useState(false);
 
@@ -112,6 +132,7 @@ export default function LobbyPlaying({
           <div className="chat-div-playing">
             <img src={Table} className="table-container" />
             {renderPlayersOnTable()}
+            {renderTimer}
           </div>
           <div className="chat-stack">
             <h2 style={{ textAlign: "center" }}>Word is {lobbyStatus.word}</h2>

@@ -7,16 +7,28 @@ p {
 	text-align: center;
 	z-index: 102;
 	position: relative;
+	padding: 10px;
 }
+
+p {
+	font-size: 20px;
+}
+
 
 .outer-container {
 	position: relative;
 	z-index: 100;
-	margin: 0 5%;
+	margin: 0 17%;
 }
 
 .decor-rectangle {
 	position: absolute;
 	background-color: var(--color-rectangle);
 	z-index: 101;
+}
+
+@media (max-width: 768px) {
+	.outer-container {
+		margin: 0;
+	}
 }

@@ -12,8 +12,12 @@ export function useLobbyData() {
     flag: false,
     msg: "",
   });
-  const protocol = window.location.protocol === "https:" ? "wss:" : "ws";
-  const host = window.location.host;
+  const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+  const host =
+    window.location.host === "localhost:5173"
+      ? "localhost:8080"
+      : window.location.host;
+
   const { send, readyState, lastMessage } = useWebSocket(
     `${protocol}//${host}/api/v1/gameroom/ws`,
   );
@@ -38,6 +42,14 @@ export function useLobbyData() {
   });
 
   useEffect(() => {
+    function handleTokenChange() {
+      window.location.reload();
+    }
+    window.addEventListener("tokenReady", handleTokenChange);
+    return () => window.removeEventListener("tokenReady", handleTokenChange);
+  }, []);
+
+  useEffect(() => {
     if (readyState === WebSocket.OPEN) {
       const key = window.location.pathname.split("/lobby/")[1];
       const token = localStorage.getItem("token");
@@ -57,6 +69,7 @@ export function useLobbyData() {
         const data = JSON.parse(lastMessage.data);
         if (data.error) {
           console.error(data.error);
+          setIsValid(false);
           return;
         }
         console.log(data);
@@ -231,11 +244,26 @@ export function useLobbyData() {
       console.error("findIndex did not find");
     }
     const arrLen = lobbyStatus.players.length;
-    const leftIndex = (myIndex + 1 + arrLen) % arrLen;
-    const rightIndex = (myIndex - 1 + arrLen) % arrLen;
 
-    leftPlayerID = players[leftIndex].id;
-    rightPlayerID = players[rightIndex].id;
+    //TODO: Need to test this
+    const leftIndex = (myIndex + 1 + arrLen) % arrLen;
+    while (true) {
+      leftPlayerID = players[leftIndex].id;
+      if (players[leftPlayerID].status === "active") {
+        break;
+      }
+      leftIndex++;
+      leftIndex %= arrLen;
+    }
+    const rightIndex = (myIndex - 1 + arrLen) % arrLen;
+    while (true) {
+      rightPlayerID = players[rightIndex].id;
+      if (players[rightPlayerID].status === "active") {
+        break;
+      }
+      rightIndex++;
+      rightIndex %= arrLen;
+    }
   }
 
   const sendLeftPlayer = (text) => {
