@@ -1,9 +1,10 @@
+import { useState } from "react";
 import ChatDisplay from "../../components/ChatDisplay/ChatDisplay";
 import MessageTextBox from "../../components/MessageTextBox/MessageTextBox";
 import Table from "../../assets/sto12.svg";
 import Chat from "../../components/Chat/Chat";
 import ChatIcon from "../../assets/chat.svg";
-import { useMemo, useState } from "react";
+import PlayerAvatar from "../../components/PlayerAvatar/PlayerAvatar";
 import TimeBar from "../../components/TimeBar/TimeBar";
 
 export default function LobbyPlaying({
@@ -77,13 +78,13 @@ export default function LobbyPlaying({
             }
 
             return (
-              <div
+              <PlayerAvatar
+                name={player.name}
                 key={player.id}
-                className={`player-circle ${isMe ? "me" : ""} ${isWritter ? "writer" : ""}`}
                 style={playerStyle}
-              >
-                {player.name.substring(0, 1)}
-              </div>
+                isMe={isMe}
+                isWritter={isWritter}
+              />
             );
           })}
         </div>
@@ -125,7 +126,10 @@ export default function LobbyPlaying({
         <div className="main-div">
           <div className="chat-div-playing">
             <img src={Table} className="table-container" />
-            <TimeBar key={`${timer}-${lobbyStatus.turnIndex}-${lobbyStatus.wordChain.length}`} timeInMS={timer} />
+            <TimeBar
+              key={`${timer}-${lobbyStatus.turnIndex}-${lobbyStatus.wordChain.length}`}
+              timeInMS={timer}
+            />
             {renderPlayersOnTable()}
           </div>
           <div className="chat-stack">

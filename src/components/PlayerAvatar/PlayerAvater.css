@@ -1,0 +1,57 @@
+.player-avatar {
+	/*Diametar of circle*/
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 1vh;
+
+	width: 5vw;
+	height: 5vw;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+
+	color: white;
+	background-color: darkgrey;
+}
+
+.player-avatar .avatar-initial {
+	display: flex;
+	justify-content: center;
+	/* Centers horizontally */
+	align-items: center;
+	height: 100%;
+	cursor: default;
+	font-size: 2vw;
+}
+
+.player-avatar.me {
+	background-color: var(--color-writter);
+	width: inherit * 2.1;
+	height: inherit * 2.1;
+}
+
+.player-avatar.writter {
+	border: powderblue 0.5vw solid;
+}
+
+.player-avatar.me .avatar-full-name {
+	background-color: var(--color-writter);
+}
+
+.player-avatar .avatar-full-name {
+	font-size: 2vw;
+	background-color: darkgrey;
+	width: max-content;
+	border-radius: 5px;
+	display: none;
+	cursor: default;
+}
+
+.player-avatar:hover .avatar-full-name {
+	display: block;
+}
+
+.player-avatar:hover .avatar-initial {
+	display: none;
+}

@@ -163,6 +163,7 @@ export function useLobbyData() {
               state: data.state,
               players: data.players,
               impostor: data.impostor,
+              playersWhoVote: [],
             }));
             if (data.gameStatus !== "playing") {
               setPrivateMessages({

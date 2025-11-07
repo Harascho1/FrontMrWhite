@@ -2,7 +2,7 @@
 	display: grid;
 	grid-area: 1/1;
 	width: 100%;
-	max-width: 200px;
+	max-width: 250px;
 	height: 30px;
 	background-color: var();
 	border-radius: 5px;
