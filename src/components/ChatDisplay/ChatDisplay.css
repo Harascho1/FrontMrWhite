@@ -4,7 +4,7 @@
 
 	border: var(--color-chatdisplay) 2px solid;
 	border-radius: 16px 16px 0px 0px;
-	background-color: var(--color-textbox);
+	background: var(--color-textbox);
 
 
 	overflow: auto;

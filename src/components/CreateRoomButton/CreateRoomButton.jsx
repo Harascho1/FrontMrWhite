@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AlertWindow from "../AlertWindow/AlertWindow";
 import api from "../../services/api";
@@ -17,7 +17,7 @@ const createRoom = async (token, navigate) => {
   }
 };
 
-export default function CreateRoomButton() {
+export default function CreateRoomButton({ className }) {
   const navigate = useNavigate();
   //const [isLoggedOn, setLoggedOn] = useState(false);
   const [isAlertOpen, setAlertOpen] = useState(false);
@@ -41,7 +41,10 @@ export default function CreateRoomButton() {
 
   return (
     <>
-      <button onClick={handleButtonClick}>Create Room</button>
+      {/* wrapper receives animated border styles via the passed className */}
+      <div className={className}>
+        <button onClick={handleButtonClick}>Create Room</button>
+      </div>
       {isAlertOpen ? (
         <AlertWindow
           isOpen={isAlertOpen}

@@ -9,6 +9,10 @@ ul {
 	box-sizing: border-box;
 }
 
+.h1-wrapper {
+	height: 58px;
+}
+
 .lobby-container {
 	display: flex;
 	flex-direction: row;
@@ -28,6 +32,7 @@ ul {
 	flex-direction: column;
 	align-items: center;
 	margin: 2% auto 0 auto;
+	box-sizing: border-box;
 }
 
 .player-grid-container {
@@ -142,7 +147,7 @@ ul {
 	display: flex;
 	border-radius: 20px 20px 0 0;
 	flex-direction: column;
-	background-color: var(--color-playersList);
+	background: linear-gradient(to bottom, var(--color-h2-background), var(--color-playersList));
 	box-shadow: var(--shadow-medium);
 	width: 90%;
 	height: 400px;
@@ -279,6 +284,36 @@ li {
 h2 {
 	padding: 0% 1%;
 	margin: 0% 0;
+}
+
+@keyframes scaleIn {
+
+	/* Početno stanje (odakle počinje) */
+	from {
+		font-size: 2.5em;
+		opacity: 0.8;
+		/* Opciono: da lepše "uđe" */
+	}
+
+	/* Krajnje stanje (gde se završava) */
+	to {
+		font-size: 3em;
+		opacity: 1;
+	}
+}
+
+/* 2. Primenjujemo animaciju na h1 */
+h1 {
+	animation-name: scaleIn;
+	/* Kažemo koji keyframes da koristi */
+	animation-duration: 0.8s;
+	/* Koliko da traje (npr. 0.4 sekunde) */
+	animation-timing-function: ease-out;
+	/* Način na koji se ubrzava/usporava */
+
+	/* --- Ovo je ključno --- */
+	/* Govori elementu da zadrži stilove iz "to" stanja nakon završetka animacije */
+	animation-fill-mode: forwards;
 }
 
 .start-game-btn {

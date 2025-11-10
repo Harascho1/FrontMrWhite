@@ -100,14 +100,18 @@ export default function LobbyPlaying({
   const hasKicked = !!kickedPlayers.find((obj) => obj.id === myID);
   return (
     <>
-      {countdown.countdown !== 0 && (
-        <h1 style={{ textAlign: "center" }}>
-          {countdown.text + ": " + countdown.countdown}
-        </h1>
-      )}
-      {countdown.countdown === 0 && lobbyStatus.turnIndex !== 0 && (
-        <h1 style={{ textAlign: "center" }}>{writter.name} turn</h1>
-      )}
+      <div className="h1-wrapper">
+        {countdown.countdown !== 0 && (
+          <h1 key={countdown.countdown} style={{ textAlign: "center" }}>
+            {countdown.text + ": " + countdown.countdown}
+          </h1>
+        )}
+        {countdown.countdown === 0 && lobbyStatus.turnIndex !== 0 && (
+          <h1 key={writter.id} style={{ textAlign: "center" }}>
+            {writter.name} turn
+          </h1>
+        )}
+      </div>
       <div className="lobby-container">
         <div className={`left-chat-toggle`} onClick={() => setLOpen(!lopen)}>
           <button>

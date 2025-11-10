@@ -1,41 +1,41 @@
 :root {
   --color-button-border-hover: #cadfe0;
 
-  --color-button-primary: #fffade;
-  --color-button-primary-hover: #FFFCEA;
+  --color-button-primary: #6d6875;
+  --color-button-primary-hover: #6d6875;
 
   --color-button-submit: #473C00;
   --color-button-submit-hover: #A28900;
 
   --color-text: #474747;
+  --color-button-text: white;
 
   --color-input-focus-border: #474747;
   --color-input-hover: #FFFCEA;
 
-  --color-chatdisplay: #FDFBD4;
-  --color-playersList: #FDFBD4;
-  --color-userBox: #FDFBD4;
-  --color-moreInfoBox: #FDFBD4;
+  --color-chatdisplay: #ffb4a2;
+  --color-playersList: #ffb4a2;
+  --color-userBox: #ffb4a2;
+  --color-moreInfoBox: #ffb4a2;
 
-  --color-rectangle: #FDFBD4;
+  --color-rectangle: #e5989b;
 
-  --color-alertWindow: #FDFBD4;
+  --color-alertWindow: #e5989b;
 
-  --color-textbox: #e3dcac;
+  --color-textbox: #e5989b;
 
   --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.2);
 
   --color-li: #87878720;
-  --color-h2-background: #46323930;
+  --color-h2-background: #b5838d;
 
-  --color-moreInfoBox-border: #46323931;
+  --color-moreInfoBox-border: #b5838d;
 
-  --color-playersList-border: #46323931;
+  --color-playersList-border: #b5838d;
 
   --color-writter: #38A700;
 
   --color-timeBar-conatiner: #FDFBD4;
 
-  color: #213547;
-  background-color: #e8e5d1;
+  background: linear-gradient(to bottom, #ffcdb2 70%, white);
 }

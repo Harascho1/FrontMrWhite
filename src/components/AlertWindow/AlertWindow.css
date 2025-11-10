@@ -32,7 +32,6 @@
 .window button {
 	padding: 8px 16px;
 	border-radius: 12px;
-	border: 1px solid #ccc;
 	background: var(--color-button-primary);
 	cursor: pointer;
 }

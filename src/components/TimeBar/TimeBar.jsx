@@ -29,13 +29,13 @@ function TimeBar({ timeInMS }) {
   }
   return (
     <>
-      {!isNaN(percent) && (
+      {!isNaN(percent) && !isTimeExpired && (
         <div className="time-bar-container">
           <div
             className="time-bar"
             style={{ width: `${percent}%`, backgroundColor: color }}
           >
-            {isTimeExpired ? "Vreme isteklo!" : `${Math.round(percent)}%`}
+            {isTimeExpired ? "" : "" /*`${Math.round(percent)}%`*/}
           </div>
         </div>
       )}

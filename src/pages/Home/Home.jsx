@@ -16,7 +16,7 @@ export default function Home() {
         <PopOutUsernameDemo />
       </div>
       <div className="home-container-button">
-        <CreateRoomButton />
+        <CreateRoomButton className="create-button" />
         <div className="arrow-container">
           <img src={Arrow1} className="arrow arrow-1" />
           <img src={Arrow2} className="arrow arrow-2" />
