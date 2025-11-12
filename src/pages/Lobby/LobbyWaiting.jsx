@@ -75,7 +75,7 @@ export default function LobbyWaiting({
         </div>
       </>
     );
-  }, [playersDep]);
+  }, [playersDep, open]);
 
   return (
     <>

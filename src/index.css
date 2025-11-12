@@ -51,9 +51,13 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
   border: none;
-  z-index: 1;
 
   color: var(--color-button-text);
+}
+
+input:focus {
+  border: none;
+  outline: none;
 }
 
 button:focus,
