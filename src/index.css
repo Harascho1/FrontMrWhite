@@ -27,9 +27,10 @@ li {
 }
 
 body {
+  font-family: "Raleway";
   margin: 0;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 h1 {
@@ -58,11 +59,16 @@ button {
 input:focus {
   border: none;
   outline: none;
+  caret-color: #00000040;
+}
+
+imput {
+  font-family: inherit;
 }
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: none;
 }
 
 a:hover {

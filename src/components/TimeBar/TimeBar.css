@@ -7,7 +7,7 @@
 	background-color: var();
 	border-radius: 5px;
 	overflow: hidden;
-	z-index: 1001;
+	z-index: 1;
 	border: 5px outset black;
 }
 

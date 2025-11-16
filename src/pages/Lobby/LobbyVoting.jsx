@@ -16,7 +16,9 @@ export default function LobbyVoting({
   );
 
   const myID = lobbyStatus.userId;
-  const players = lobbyStatus.votingList.filter((player) => player.id !== myID);
+  const players = lobbyStatus.players.filter(
+    (player) => player.id !== myID && player.status !== "kicked",
+  );
   const voters = lobbyStatus.playersWhoVote || [];
   const didIVote = voters.find((obj) => obj.id === myID);
   const hasVoted = !!didIVote;

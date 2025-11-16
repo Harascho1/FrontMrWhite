@@ -53,7 +53,7 @@ export default function LobbyWaiting({
       <>
         <div className="players-toggle" onClick={() => setOpen(!open)}>
           <button>
-            <img src={UserIcon} style={{ width: "35px" }} />
+            <img src={UserIcon} style={{ width: "50px" }} />
           </button>
         </div>
         {open && (

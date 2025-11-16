@@ -124,7 +124,7 @@ export default function LobbyPlaying({
             messages={privateMessages.leftMessages}
             onEnter={sendDM.sendLeftPlayer}
             width={`${lopen ? "70vw" : "20vw"}`}
-            height={`${lopen ? "50vh" : "40%"}`}
+            height={`${lopen ? "50dvh" : "40%"}`}
           />
         </div>
         <div className="main-div">
@@ -168,7 +168,7 @@ export default function LobbyPlaying({
             messages={privateMessages.rightMessages}
             onEnter={sendDM.sendRightPlayer}
             width={`${ropen ? "70vw" : "20vw"}`}
-            height={`${ropen ? "50vh" : "40%"}`}
+            height={`${ropen ? "50dvh" : "40%"}`}
           />
         </div>
       </div>

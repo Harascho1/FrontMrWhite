@@ -18,7 +18,7 @@ ul {
 	flex-direction: row;
 	justify-content: space-between;
 	margin: 0;
-	height: 80vh;
+	height: 80dvh;
 }
 
 .players-box h2 {
@@ -37,10 +37,10 @@ ul {
 
 .player-grid-container {
 	width: 60vw;
-	height: 60vh;
+	height: 60dvh;
 
-	width: min(50vw, 50vh);
-	height: min(50vw, 50vh);
+	width: min(50vw, 50dvh);
+	height: min(50vw, 50dvh);
 
 	margin: auto;
 	display: grid;
@@ -96,7 +96,7 @@ ul {
 	border: 2px solid #333;
 	background-color: var(--color-button-primary);
 	cursor: pointer;
-	font-size: clamp(0.5rem, 1.5vw + 1.5vh, 2rem);
+	font-size: clamp(0.5rem, 1.5vw + 1.5dvh, 2rem);
 	/* Responzivna veličina fonta */
 	text-align: center;
 	padding: 0;
@@ -333,7 +333,7 @@ h1 {
 
 .start-game-btn button {
 	box-shadow: var(--shadow-medium);
-	width: 150px;
+	width: 200px;
 	height: 50px;
 	font-size: 20px;
 }
@@ -408,16 +408,16 @@ h1 {
 		background: rgba(0, 0, 0, 0.4);
 		backdrop-filter: blur(3px);
 		width: 100vw;
-		height: 100vh;
+		height: 100dvh;
 	}
 
 	.players-box.active {
 		opacity: 1;
 		display: flex;
 		position: absolute;
+		border-radius: 0 20px 20px 0;
 		height: 50%;
 		width: 60%;
-		left: 2vw;
 		z-index: 100;
 	}
 
@@ -425,15 +425,15 @@ h1 {
 	.right-chat-toggle {
 		display: inline;
 		position: absolute;
-		bottom: 1vh;
+		bottom: 1dvh;
 	}
 
 	.left-chat-toggle {
-		left: 1vh;
+		left: 1dvh;
 	}
 
 	.right-chat-toggle {
-		right: 1vh;
+		right: 1dvh;
 		transform: scaleX(-1);
 	}
 
@@ -443,7 +443,7 @@ h1 {
 		background: rgba(0, 0, 0, 0.4);
 		backdrop-filter: blur(3px);
 		width: 100vw;
-		height: 100vh;
+		height: 100dvh;
 		z-index: 3;
 
 	}

@@ -9,7 +9,7 @@
 
 	overflow: auto;
 	width: 99.5%;
-	height: 70vh;
+	height: 70dvh;
 
 }
 
@@ -24,6 +24,6 @@
 
 @media (max-width: 768px) {
 	.chat-box {
-		height: 60vh;
+		height: 60dvh;
 	}
 }

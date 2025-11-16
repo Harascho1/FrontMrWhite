@@ -17,10 +17,11 @@
 }
 
 .window p {
-	font-family: sans-serif;
+	font-family: inherit;
 	padding-bottom: 10px;
 	font-weight: 20;
-	font-size: 1rem;
+	font-size: 1.2rem;
+	font-weight: 250;
 	color: #213547;
 }
 
