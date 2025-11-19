@@ -18,7 +18,8 @@ export default function Lobby() {
     countdown,
     isAlertOpen,
     onCloseAlert,
-    sendDM,
+    sendLeftPlayer,
+    sendRightPlayer,
     privateMessages,
     timer,
   } = useLobbyData();
@@ -37,7 +38,8 @@ export default function Lobby() {
       countdown={countdown}
       alert={isAlertOpen}
       onCloseAlert={onCloseAlert}
-      sendDM={sendDM}
+      sendLeftPlayer={sendLeftPlayer}
+      sendRightPlayer={sendRightPlayer}
       privateMessages={privateMessages}
       timer={timer}
     />
@@ -58,7 +60,8 @@ function ValidLobby({
   countdown,
   alert,
   onCloseAlert,
-  sendDM,
+  sendLeftPlayer,
+  sendRightPlayer,
   privateMessages,
   timer,
 }) {
@@ -81,7 +84,8 @@ function ValidLobby({
               lobbyStatus={lobbyStatus}
               countdown={countdown}
               sendWord={sendWord}
-              sendDM={sendDM}
+              sendLeftPlayer={sendLeftPlayer}
+              sendRightPlayer={sendRightPlayer}
               privateMessages={privateMessages}
               timer={timer}
             />

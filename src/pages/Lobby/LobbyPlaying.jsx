@@ -11,7 +11,8 @@ export default function LobbyPlaying({
   lobbyStatus,
   countdown,
   sendWord,
-  sendDM,
+  sendLeftPlayer,
+  sendRightPlayer,
   privateMessages,
   timer,
 }) {
@@ -122,7 +123,7 @@ export default function LobbyPlaying({
           <Chat
             disabled={hasKicked}
             messages={privateMessages.leftMessages}
-            onEnter={sendDM.sendLeftPlayer}
+            onEnter={sendLeftPlayer}
             width={`${lopen ? "70vw" : "20vw"}`}
             height={`${lopen ? "50dvh" : "40%"}`}
           />
@@ -166,7 +167,7 @@ export default function LobbyPlaying({
           <Chat
             disabled={hasKicked}
             messages={privateMessages.rightMessages}
-            onEnter={sendDM.sendRightPlayer}
+            onEnter={sendRightPlayer}
             width={`${ropen ? "70vw" : "20vw"}`}
             height={`${ropen ? "50dvh" : "40%"}`}
           />

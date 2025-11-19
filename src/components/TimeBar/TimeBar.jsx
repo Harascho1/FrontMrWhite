@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./TimeBar.css";
-import { object } from "framer-motion/m";
 
 function TimeBar({ timeInMS }) {
   const safeTimeInMS = timeInMS > 0 ? timeInMS : 1;

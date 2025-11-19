@@ -1,16 +1,27 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export function useWebSocket(url) {
+export function useWebSocket(url, onMessage) {
   const [readyState, setReadyState] = useState(WebSocket.CONNECTING);
-  const [lastMessage, setLastMessage] = useState(null);
   const ws = useRef(null);
 
+  const onMessageRef = useRef(onMessage);
+
   useEffect(() => {
-    ws.current = new WebSocket(url);
-    ws.current.onopen = () => setReadyState(WebSocket.OPEN);
-    ws.current.onclose = () => setReadyState(WebSocket.CLOSED);
-    ws.current.onmessage = (event) => setLastMessage(event);
-    ws.current.onerror = (err) => console.error("WebSocket error:", err);
+    onMessageRef.current = onMessage;
+  }, [onMessage]);
+
+  useEffect(() => {
+    const socket = new WebSocket(url);
+    socket.onopen = () => setReadyState(WebSocket.OPEN);
+    socket.onclose = () => setReadyState(WebSocket.CLOSED);
+    socket.onmessage = (event) => {
+      if (onMessageRef.current) {
+        onMessageRef.current(event);
+      }
+    };
+    socket.onerror = (err) => console.error("WebSocket error:", err);
+
+    ws.current = socket;
 
     return () => {
       if (ws.current) {
@@ -29,5 +40,6 @@ export function useWebSocket(url) {
     },
     [ws.current],
   );
-  return { send, readyState, lastMessage };
+
+  return { send, readyState };
 }
