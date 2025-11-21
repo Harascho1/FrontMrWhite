@@ -21,10 +21,6 @@ export default function LobbyWaiting({
           system randomly selects words from this collection, so the experience
           is always unique and unpredictable.
         </p>
-        <p>
-          If you’d like to contribute or suggest new words, please open an issue
-          on GitHub — suggestions are always welcome!
-        </p>
       </div>
     );
   }, []);
@@ -85,6 +81,7 @@ export default function LobbyWaiting({
           {motivationQuates}
         </div>
         <div className="main-div">
+          <h1>Lobby key: {lobbyStatus.enroll}</h1>
           <Chat onEnter={sendMessage} messages={messages} autoScroll={true} />
         </div>
         <div className="right-column">

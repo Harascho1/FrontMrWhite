@@ -1,0 +1,45 @@
+.cart {
+	position: absolute;
+	margin: 50% 50%;
+	transform: translate(-50%, -50%);
+	max-width: 400px;
+	width: 100%;
+	border-radius: 16px;
+	z-index: 10;
+	background-color: var(--color-chatdisplay);
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100dvh;
+	z-index: 10000;
+}
+
+.cart-form {
+	display: flex;
+	align-items: center;
+	margin-top: 16px;
+	flex-direction: column;
+	gap: 4px;
+	padding: 10px;
+}
+
+.cart-form>input {
+	text-align: center;
+}
+
+.cart-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: start;
+	gap: 12px;
+}
+
+@media (max-width: 768px) {
+	.cart {
+		max-width: 200px;
+	}
+}

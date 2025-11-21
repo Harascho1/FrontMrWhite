@@ -126,6 +126,7 @@ export default function LobbyPlaying({
             onEnter={sendLeftPlayer}
             width={`${lopen ? "70vw" : "20vw"}`}
             height={`${lopen ? "50dvh" : "40%"}`}
+            placeHolder="DM person on your left"
           />
         </div>
         <div className="main-div">
@@ -170,6 +171,7 @@ export default function LobbyPlaying({
             onEnter={sendRightPlayer}
             width={`${ropen ? "70vw" : "20vw"}`}
             height={`${ropen ? "50dvh" : "40%"}`}
+            placeHolder="DM person on your right"
           />
         </div>
       </div>

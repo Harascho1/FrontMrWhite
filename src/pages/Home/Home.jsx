@@ -7,6 +7,7 @@ import Arrow4 from "../../assets/arrow4.svg?react";
 import SArrow1 from "../../assets/strait.svg";
 import SArrow2 from "../../assets/strait (2).svg";
 import "./Home.css";
+import JoinRoomButton from "../../components/JoinRoomButton/JoinRoomButton.jsx";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       </div>
       <div className="home-container-button">
         <CreateRoomButton className="create-button" />
+        <JoinRoomButton className="create-button" />
         <div className="arrow-container">
           <img src={Arrow1} className="arrow arrow-1" />
           <img src={Arrow2} className="arrow arrow-2" />

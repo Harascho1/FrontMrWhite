@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import "./Chat.css";
 
-export function MessageTextBox({ onEnter, disable }) {
+export function MessageTextBox({ onEnter, disable, placeHolder }) {
   const [value, setValue] = useState("");
   const handleChanges = (event) => {
     setValue(event.target.value);
@@ -29,6 +29,7 @@ export function MessageTextBox({ onEnter, disable }) {
         onChange={handleChanges}
         onKeyDown={handleKeyDown}
         disabled={disable}
+        placeholder={placeHolder}
       />
     </div>
   );
@@ -65,12 +66,17 @@ export default function Chat({
   height,
   autoScroll = false,
   disabled = false,
+  placeHolder = "",
 }) {
   return (
     <>
       <div className="chat" style={{ width: width, height: height }}>
         <ChatDisplay messages={messages} autoScroll={autoScroll} />
-        <MessageTextBox onEnter={onEnter} disable={disabled} />
+        <MessageTextBox
+          onEnter={onEnter}
+          disable={disabled}
+          placeHolder={placeHolder}
+        />
       </div>
     </>
   );

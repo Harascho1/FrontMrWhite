@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AlertWindow from "../AlertWindow/AlertWindow";
 import api from "../../services/api";
+import { Activity } from "react";
 
 const createRoom = async (token, navigate) => {
   try {
@@ -45,13 +46,13 @@ export default function CreateRoomButton({ className }) {
       <div className={className}>
         <button onClick={handleButtonClick}>Create Room</button>
       </div>
-      {isAlertOpen ? (
+      <Activity mode={isAlertOpen ? "visible" : "hiddne"}>
         <AlertWindow
           isOpen={isAlertOpen}
           onClose={handleCloseAlert}
           text={"You need to be logged on frist!"}
         />
-      ) : null}
+      </Activity>
     </>
   );
 }

@@ -21,6 +21,7 @@ export function useLobbyData() {
   const [lobbyStatus, setLobbyStatus] = useState({
     action: "lobby_status",
     state: "waiting",
+    enroll: "",
     players: [],
     playersWhoVote: [],
     gameStatus: "not_started",
@@ -114,6 +115,7 @@ export function useLobbyData() {
         case "full_lobby_status": {
           setLobbyStatus((prevStatus) => ({
             ...prevStatus,
+            enroll: data.enroll,
             state: data.state,
             players: data.players,
             gameStatus: data.gameStatus,

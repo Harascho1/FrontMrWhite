@@ -344,6 +344,7 @@ h1 {
 }
 
 @media (max-width: 768px) {
+
 	.players-box {
 		position: absolute;
 		display: none;
@@ -449,24 +450,32 @@ h1 {
 	}
 
 	.left-chat.lactive {
-		left: 1vw;
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+
+		left: 0;
 	}
 
 	.right-chat.ractive {
-		right: 1vw;
+		display: flex;
+		flex-direction: column;
+		align-items: end;
+		right: 0;
 	}
 
-	.right-chat.ractive,
-	.left-chat.lactive {
-		display: inline;
-		position: absolute;
+	.right-chat.ractive>.c {
 
-		width: auto;
-		height: auto;
+		.right-chat.ractive,
+		.left-chat.lactive {
+			box-sizing: border-box;
+			position: absolute;
 
-		align-items: center;
-		z-index: 4;
+			width: auto;
+			height: auto;
 
-		margin: 0 0;
+			z-index: 4;
+
+			margin: 0 0;
+		}
 	}
-}
