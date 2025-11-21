@@ -464,18 +464,16 @@ h1 {
 		right: 0;
 	}
 
-	.right-chat.ractive>.c {
+	.right-chat.ractive,
+	.left-chat.lactive {
+		box-sizing: border-box;
+		position: absolute;
 
-		.right-chat.ractive,
-		.left-chat.lactive {
-			box-sizing: border-box;
-			position: absolute;
+		width: auto;
+		height: auto;
 
-			width: auto;
-			height: auto;
+		z-index: 4;
 
-			z-index: 4;
-
-			margin: 0 0;
-		}
+		margin: 0 0;
 	}
+}
